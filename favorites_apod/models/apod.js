@@ -14,7 +14,7 @@ module.exports = function(app){
 
     var apod = schema({
         copyright : {type: String, required: true},
-        date : {type: String, required: true, unique : true},
+        date : {type: String, required: true},
         explanation : {type: String, required: true},
         hdurl : {type: String, required: true},
         media_type : {type: String, required: true},
