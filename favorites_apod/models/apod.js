@@ -1,29 +1,27 @@
-module.exports = function(app){
+module.exports = function (app) {
 
     var schema = require('mongoose').Schema;
 
     var device = schema({
-        model_name : String,
-        screen_size : String,
-        manufacturer : String
-    })
-    
-    var rate = schema({
-        rate_value : {type: Number, required: true}
-    })
+        imei: { type: Number, riquered: true },
+        model_name: String,
+        screen_size: String,
+        manufacturer: String,
+        rate_value: { type: Number, required: true }
+    });
 
-    var apod = schema({
-        copyright : {type: String, required: true},
-        date : {type: String, required: true},
-        explanation : {type: String, required: true},
-        hdurl : {type: String, required: true},
-        media_type : {type: String, required: true},
-        service_version : String,
-        title : {type: String, required: true},
-        url : {type: String, required: true},
-        device : [device],
-        rate : [rate]
-    })
+    var apod = schema({ 
+        copyright: { type: String, required: true },
+        date: { type: String, unique: true, riquered: true },
+        explanation: { type: String, required: true },
+        hdurl: { type: String, required: true },
+        media_type: { type: String, required: true },
+        service_version: String,
+        title: { type: String, required: true },
+        url: { type: String, required: true },
+        device: [device]
+    });
+
     return db.model('apod', apod);
 }
 

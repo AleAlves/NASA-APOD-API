@@ -3,6 +3,7 @@ var express = require('express'),
   app = express(),
   mongoose = require('mongoose'),
   bodyParser = require('body-parser');
+
 ;
 global.db = mongoose.createConnection('mongodb://localhost:27017/fav_apod', {
   useMongoClient: true,
