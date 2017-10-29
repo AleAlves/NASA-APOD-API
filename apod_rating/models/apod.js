@@ -3,15 +3,15 @@ module.exports = function (app) {
     var schema = require('mongoose').Schema;
 
     var device = schema({
-        imei: { type: Number, riquered: true },
-        model_name: String,
-        screen_size: String,
+        imei: { type: String, riquered: true },
+        deviceName: String,
+        screenSize: String,
         manufacturer: String,
-        rate_value: { type: Number, required: true }
+        rateValue: { type: Number, required: true }
     });
 
-    var apod = schema({ 
-        copyright: { type: String, required: true },
+    var apod = schema({
+        copyright: { type: String, required: false },
         date: { type: String, unique: true, riquered: true },
         explanation: { type: String, required: true },
         hdurl: { type: String, required: true },
@@ -19,6 +19,7 @@ module.exports = function (app) {
         service_version: String,
         title: { type: String, required: true },
         url: { type: String, required: true },
+        averageRate: { type: Number, required: false },
         device: [device]
     });
 

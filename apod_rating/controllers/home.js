@@ -6,6 +6,9 @@ module.exports = function (app) {
         index: function (req, res) {
             res.render('home/index');
         },
+        
+        // User rate
+
         rate: function (req, res) {
             var apodJson = req.body.apod;
             var deviceJson = req.body.device;
@@ -20,10 +23,12 @@ module.exports = function (app) {
                                 log("Error - " + error);
                             }
                             else {
+                                apod.averageRate = deviceJson.rateValue;
                                 var device = apod.device;
                                 device.push(deviceJson);
                                 apod.save(function () {
-                                    res.send("Novo Apod Criado com sucesso");
+                                    console.log("Device criado com sucesso num apod recem criado");
+                                    res.send("Device");
                                 });
                             }
                         });
@@ -36,8 +41,8 @@ module.exports = function (app) {
                                 "_id": 1,
                                 "device._id": 1,
                                 "device.imei": 1,
-                                "device.model_name": 1,
-                                "device.rate_value": 1,
+                                "device.modelName": 1,
+                                "device.rateValue": 1,
                                 "device.manufacturer": 1
                             }
                         }], function (error, deviceProjection) {
@@ -45,15 +50,19 @@ module.exports = function (app) {
                                 var device = apod.device;
                                 device.push(deviceJson);
                                 apod.save(function () {
-                                    res.send("Device criado com sucesso num apod");
+                                    updateAvaregeRate(apod);
+                                    console.log("Device criado com sucesso num Apod");
+                                    res.send("Device criado com sucesso num Apod");
                                 });
                             }
                             else {
                                 var device = apod.device.id(deviceProjection);
                                 apodModel.findById(deviceProjection[0]._id, function (error, apod) {
                                     var device = apod.device.id(deviceProjection[0].device._id);
-                                    device.rate_value = deviceJson.rate_value;
+                                    device.rateValue = deviceJson.rateValue;
                                     apod.save(function () {
+                                        updateAvaregeRate(apod);
+                                        console.log("avaliacao atualizada");
                                         res.send("avalicao  atualizada");
                                     })
                                 });
@@ -63,31 +72,23 @@ module.exports = function (app) {
                 });
         },
 
-        top: function (req, res) {
-            apodModel.aggregate([
-                { $unwind: "$device" },
-                { $match: { "device.rate_value": 9 } },
-                {
-                    $project: {
-                        "_id": 1,
-                        "copyright": 1,
-                        "date": 1,
-                        "explanation": 1,
-                        "hdurl": 1,
-                        "media_type": 1,
-                        "service_version": 1,
-                        "title": 1,
-                        "url": 1
-                    }
-                }], function (error, top) {
-                    var rates;
-                    var count;
-                    for (count = 0; count < top.length; count++) {
-                        console.log(top[count].device);
-                    }
-                    res.send(top);
-                });
-        }
+        // Get Top 10
+
+        topRated: function (req, res) {
+            apodModel.find().limit(10).sort({ averageRate: -1 }).select({
+                date: 1,
+                explanation: 1,
+                hdurl: 1,
+                media_type: 1,
+                service_version: 1,
+                title: 1,
+                url: 1,
+                averageRate: 1
+            }).exec(function (error, callback) {
+                console.log("Lista de favoritos");
+                res.send(callback);
+            });
+        },
     };
     return HomeController;
 };
@@ -95,3 +96,20 @@ module.exports = function (app) {
 function log(data) {
     console.log("Log: " + data);
 }
+
+
+
+function updateAvaregeRate(apod) {
+    console.log("\nRate:\n");
+    var i;
+    var sum = 0;
+    for (i = 0; i < apod.device.length; i++) {
+        sum = sum + apod.device[i].rateValue;
+    }
+    console.log("soma: " + sum + " media:" + sum / i);
+    apod.averageRate = sum;
+    apod.save(function () {
+        console.log("Avaliacao media atualizada");
+    });
+}
+

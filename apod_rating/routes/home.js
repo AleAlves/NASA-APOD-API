@@ -1,6 +1,6 @@
 module.exports = function(app){
   var home = app.controllers.home;
   app.get('/', home.index);
-  app.post('/api/rate', home.rate);  
-  app.get('/api/top', home.top);
+  app.put('/api/rate', home.rate);
+  app.get('/api/topRated', home.topRated);
 }
