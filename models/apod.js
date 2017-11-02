@@ -20,6 +20,7 @@ module.exports = function (app) {
         title: { type: String, required: true },
         url: { type: String, required: true },
         averageRate: { type: Number, required: false },
+        rates: Number,
         device: [device]
     });
 

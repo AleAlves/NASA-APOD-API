@@ -6,7 +6,7 @@ module.exports = function (app) {
         index: function (req, res) {
             res.render('home/index');
         },
-        
+
         // User rate
 
         rate: function (req, res) {
@@ -24,6 +24,7 @@ module.exports = function (app) {
                             }
                             else {
                                 apod.averageRate = deviceJson.rateValue;
+                                apod.rates = 1;
                                 var device = apod.device;
                                 device.push(deviceJson);
                                 apod.save(function () {
@@ -83,7 +84,8 @@ module.exports = function (app) {
                 service_version: 1,
                 title: 1,
                 url: 1,
-                averageRate: 1
+                averageRate: 1,
+                rates: 1
             }).exec(function (error, callback) {
                 console.log("Lista de favoritos");
                 res.send(callback);
@@ -106,8 +108,9 @@ function updateAvaregeRate(apod) {
     for (i = 0; i < apod.device.length; i++) {
         sum = sum + apod.device[i].rateValue;
     }
-    console.log("soma: " + sum + " media:" + sum / i);
-    apod.averageRate = sum;
+    console.log("soma: " + sum + " media:" + Math.round(sum / i) + " i: " + i);
+    apod.averageRate = Math.round(sum / i);
+    apod.rates = i++;
     apod.save(function () {
         console.log("Avaliacao media atualizada");
     });
