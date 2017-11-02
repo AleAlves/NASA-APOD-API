@@ -4,8 +4,7 @@ var express = require('express'),
   mongoose = require('mongoose'),
   bodyParser = require('body-parser');
 
-;
-global.db = mongoose.createConnection('mongodb://localhost:27017/fav_apod', {
+global.db = mongoose.createConnection('mongodb://ale-api:dovaHkiin@apodratewebapp-shard-00-00-b0o6a.mongodb.net:27017,apodratewebapp-shard-00-01-b0o6a.mongodb.net:27017,apodratewebapp-shard-00-02-b0o6a.mongodb.net:27017/test?ssl=true&replicaSet=apodRateWebApp-shard-0&authSource=admin', {
   useMongoClient: true,
   /* other options */
 });
