@@ -5,6 +5,6 @@ module.exports = function (app) {
 
     app.post('/api/rate', rateController.rate);
     app.get('/api/top', topController.top);
-    app.get('/', topController.index);
+    app.get('/', rateController.index);
   
   }
