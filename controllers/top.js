@@ -18,10 +18,7 @@ module.exports = function (app) {
             }
 
             function getTopRated(count) {
-                apodModel.find({
-                    averageRate: { $gt: 3, $lt: 6 },
-                    votes: { $gt: count / 2}
-                }).limit(10).sort({ averageRate: -1 }).select({
+                apodModel.find({}).limit(10).sort({ averageRate: -1 }).select({
                         date: 1,
                         explanation: 1,
                         hdurl: 1,

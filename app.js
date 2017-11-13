@@ -9,10 +9,10 @@ global.dev = false;
 
 var database = null;
 if(dev){
-  var database = 'mongodb://localhost:27017/database';
+  database = 'mongodb://localhost:27017/database';
 }
 else{
-  var database = 'mongodb://ale-api:dovaHkiin@apodratewebapp-shard-00-00-b0o6a.mongodb.net:27017,apodratewebapp-shard-00-01-b0o6a.mongodb.net:27017,apodratewebapp-shard-00-02-b0o6a.mongodb.net:27017/databse?ssl=true&replicaSet=apodRateWebApp-shard-0&authSource=admin';  
+  database = 'mongodb://ale-api:dovaHkiin@apodratewebapp-shard-00-00-b0o6a.mongodb.net:27017,apodratewebapp-shard-00-01-b0o6a.mongodb.net:27017,apodratewebapp-shard-00-02-b0o6a.mongodb.net:27017/databse?ssl=true&replicaSet=apodRateWebApp-shard-0&authSource=admin';  
 }
 
 global.db = mongoose.createConnection( database, {
