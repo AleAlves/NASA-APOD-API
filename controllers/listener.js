@@ -4,7 +4,6 @@ module.exports = function (app) {
 
     };
 
-    let yyyymmdd = require('yyyy-mm-dd');
     var requestDate = getTodayDate();
     requestDate = requestDate.year + "-" + requestDate.month + "-" + requestDate.day;
 
@@ -12,19 +11,18 @@ module.exports = function (app) {
 
     function requestApod(requestDate) {
         setTimeout(() => {
-            if (requestDate == yyyymmdd()) {
+            if (requestDate == getTodayDate()) {
                 checkTodayApod(requestDate);
             }
             else {
                 requestApod(requestDate);
             }
-        }, 1800000);
+        }, 1800);
 
         function checkTodayApod(date) {
 
             const https = require('https');
             var hasApod = false;
-            var date = yyyymmdd();
             https.get('https://api.nasa.gov/planetary/apod?api_key=NTZlQrZD1ugcnmBxdBPa56kbYXut0sEhZen5fMbN&date=' + date, (resp) => {
                 console.log(resp.statusCode);
                 if (resp.statusCode == 200) {
@@ -61,7 +59,7 @@ module.exports = function (app) {
 
     function getTodayDate() {
         var d = new Date();
-        return { day: parseInt(d.getDate()), month: parseInt(d.getMonth()+1), year: parseInt(d.getFullYear()) };
+        return d.year + "-" + d.month + "-" + d.day;
     }
 
     function getTomorrowDate() {
