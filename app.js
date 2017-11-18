@@ -8,6 +8,7 @@ var express = require('express'),
   admin = require("firebase-admin");
 
 global.dev = false;
+global.version = "2.1.0";
 
 var config = {
   apiKey: "AIzaSyA9ci6gRvrszwCafUjEtpaKdfJtkyQy_5Q",
@@ -42,7 +43,7 @@ app.use(helmet());
 load('models').then('controllers').then('routes').into(app);
 
 app.listen(8080, function () {
-  console.log("apod server");
+  console.log("apod server version: "+ version);
   console.log("dev:" + dev);
 });
 

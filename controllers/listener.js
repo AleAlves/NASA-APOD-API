@@ -5,7 +5,7 @@ module.exports = function (app) {
     };
 
     var requestDate = getTodayDate();
-    requestDate = requestDate.year + "-" + requestDate.month + "-" + requestDate.day;
+    console.log(requestDate);
 
     requestApod(requestDate);
 
@@ -17,14 +17,14 @@ module.exports = function (app) {
             else {
                 requestApod(requestDate);
             }
-        }, 1800000);
+        }, 1800);
 
         function checkTodayApod(date) {
 
             const https = require('https');
             var hasApod = false;
             https.get('https://api.nasa.gov/planetary/apod?api_key=NTZlQrZD1ugcnmBxdBPa56kbYXut0sEhZen5fMbN&date=' + date, (resp) => {
-                console.log(resp.statusCode);
+                console.log("Request: " + date + " Status code: " + resp.statusCode + " - " + Date());
                 if (resp.statusCode == 200) {
                     sendPush(date);
                 }
@@ -48,9 +48,8 @@ module.exports = function (app) {
 
         admin.messaging().sendToDeviceGroup(notificationKey, payload).then(function (response) {
             console.log("Successfully sent message:", response);
-            var requestDate = getTomorrowDate();
-            requestDate = requestDate.year + "-" + requestDate.month + "-" + requestDate.day;
-            requestApod(requestDate);
+            var requestTomorrowDate = getTomorrowDate();
+            requestApod(requestTomorrowDate);
         }).catch(function (error) {
             console.log("Error sending message:", error);
             requestApod(requestDate);
@@ -59,13 +58,13 @@ module.exports = function (app) {
 
     function getTodayDate() {
         var d = new Date();
-        return d.year + "-" + d.month + "-" + d.day;
+        return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
     }
 
     function getTomorrowDate() {
         var d = new Date();
-        d.setDate(today.getDate()+1);
-        return { day: parseInt(d.getDate()), month: parseInt(d.getMonth()), year: parseInt(d.getFullYear()) };
+        d.setDate(today.getDate() + 1);
+        return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
     }
 
 
