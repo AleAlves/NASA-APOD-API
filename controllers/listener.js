@@ -8,17 +8,15 @@ module.exports = function (app) {
     var requestDate = getTodayDate();
     requestDate = requestDate.year + "-" + requestDate.month + "-" + requestDate.day;
 
-    requestApod(false, requestDate);
+    requestApod(requestDate);
 
-    function requestApod(todayRespOk, requestDate) {
+    function requestApod(requestDate) {
         setTimeout(() => {
-            if (!todayRespOk && requestDate == yyyymmdd()) {
+            if (requestDate == yyyymmdd()) {
                 checkTodayApod(requestDate);
             }
             else {
-                console.log(yyyymmdd());
-                console.log(requestDate);
-                requestApod(false, requestDate);
+                requestApod(requestDate);
             }
         }, 1800000);
 
@@ -33,7 +31,7 @@ module.exports = function (app) {
                     sendPush(date);
                 }
                 else {
-                    requestApod(false, date);
+                    requestApod(date);
                 }
             }).on("error", () => { });
         }
@@ -54,10 +52,10 @@ module.exports = function (app) {
             console.log("Successfully sent message:", response);
             var requestDate = getTomorrowDate();
             requestDate = requestDate.year + "-" + requestDate.month + "-" + requestDate.day;
-            requestApod(false, requestDate);
+            requestApod(requestDate);
         }).catch(function (error) {
             console.log("Error sending message:", error);
-            requestApod(false, requestDate);
+            requestApod(requestDate);
         });
     }
 
