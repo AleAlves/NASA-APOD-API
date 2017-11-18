@@ -43,6 +43,7 @@ load('models').then('controllers').then('routes').into(app);
 
 app.listen(8080, function () {
   console.log("apod server");
+  console.log("dev:" + dev);
 });
 
 
