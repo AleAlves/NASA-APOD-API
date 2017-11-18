@@ -7,7 +7,7 @@ var express = require('express'),
   helmet = require('helmet'),
   admin = require("firebase-admin");
 
-global.dev = true;
+global.dev = false;
 
 var config = {
   apiKey: "AIzaSyA9ci6gRvrszwCafUjEtpaKdfJtkyQy_5Q",
