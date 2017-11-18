@@ -17,7 +17,7 @@ module.exports = function (app) {
             else {
                 requestApod(requestDate);
             }
-        }, 1800);
+        }, 1800000);
 
         function checkTodayApod(date) {
 
