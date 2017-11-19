@@ -7,14 +7,11 @@ module.exports = function (app) {
 
     var requestDate = getTodayDate();
 
-    console.log(requestDate);
-
     requestApod(requestDate);
 
     function requestApod(requestDate) {
         setTimeout(() => {
             if (requestDate == getTodayDate()) {
-                console.log("req, true, date:"+ requestDate);
                 checkTodayApod(requestDate);
             }
             else {
@@ -22,6 +19,8 @@ module.exports = function (app) {
                 requestApod(requestDate);
             }
         }, 1800000);
+
+        // 1800000 - meia hora
 
         function checkTodayApod(date) {
 
@@ -61,13 +60,13 @@ module.exports = function (app) {
 
     function getTodayDate() {
         var d = new Date();
-        return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
+        return d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
     }
 
     function getTomorrowDate() {
         var d = new Date();
         d.setDate(d.getDate() + 1);
-        return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
+        return d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
     }
 
     return listenerController;
