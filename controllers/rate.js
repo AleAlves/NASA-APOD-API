@@ -1,3 +1,4 @@
+
 module.exports = function (app) {
 
     var apodModel = app.models.apod;
@@ -6,7 +7,7 @@ module.exports = function (app) {
     var RateController = {
 
         index: function (req, res) {
-            res.render('home/index');
+            res.render('home/index', {v:version});
         },
 
         rate: function (req, res) {

@@ -1,3 +1,4 @@
+
 module.exports = function (app) {
 
     var listenerController = {
@@ -5,6 +6,7 @@ module.exports = function (app) {
     };
 
     var requestDate = getTodayDate();
+
     console.log(requestDate);
 
     requestApod(requestDate);
@@ -12,12 +14,14 @@ module.exports = function (app) {
     function requestApod(requestDate) {
         setTimeout(() => {
             if (requestDate == getTodayDate()) {
+                console.log("req, true, date:"+ requestDate);
                 checkTodayApod(requestDate);
             }
             else {
+                console.log("req, false, date:"+ requestDate);
                 requestApod(requestDate);
             }
-        }, 1800);
+        }, 1800000);
 
         function checkTodayApod(date) {
 
@@ -48,8 +52,10 @@ module.exports = function (app) {
 
         admin.messaging().sendToDevice(topic, payload).then(function (response) {
             console.log("Successfully sent message:", response);
+            requestApod(getTomorrowDate())
         }).catch(function (error) {
             console.log("Error sending message:", error)
+            requestApod(date)
         });
     }
 
@@ -60,10 +66,9 @@ module.exports = function (app) {
 
     function getTomorrowDate() {
         var d = new Date();
-        d.setDate(today.getDate() + 1);
+        d.setDate(d.getDate() + 1);
         return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
     }
-
 
     return listenerController;
 }
