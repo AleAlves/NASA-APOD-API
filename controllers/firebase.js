@@ -6,7 +6,7 @@ module.exports = function (app) {
         push: function (req, res) {
             console.log(req.body);
 
-            var registrationToken = "dFRSA5sUqgE:APA91bElAtpY85A08fal0zqw5PexFHMsWK4WpwYX9h-sTGQy0QAVdPRiQGTPgjevPWyRNgOn9jVeE7b2lsogjyxlBo-Pc21sV_JYbZxclcC3iLDi-KQCqCYAwWqDhnPVTBBEosEHCSDX";
+            var registrationToken = "/topics/apod";
 
             var payload = {
                 notification: {

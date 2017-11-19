@@ -37,22 +37,19 @@ module.exports = function (app) {
 
     function sendPush(date) {
 
-        var notificationKey = "apod";
-
+        var topic = "/topics/apod";
+        
         var payload = {
             notification: {
                 title: "NASA APOD app",
-                body: date + ", new APOD available!"
+                body: "new APOD available!"
             }
         };
 
-        admin.messaging().sendToDeviceGroup(notificationKey, payload).then(function (response) {
+        admin.messaging().sendToDevice(topic, payload).then(function (response) {
             console.log("Successfully sent message:", response);
-            var requestTomorrowDate = getTomorrowDate();
-            requestApod(requestTomorrowDate);
         }).catch(function (error) {
-            console.log("Error sending message:", error);
-            requestApod(requestDate);
+            console.log("Error sending message:", error)
         });
     }
 
