@@ -14,11 +14,15 @@ module.exports = function (app) {
             if (requestDate == getTodayDate()) {
                 checkTodayApod(requestDate);
             }
+            else if(requestDate < getTodayDate()){
+                console.log("date < today: "+ requestDate);
+                requestDate = getTodayDate();
+                console.log("updated: "+ requestDate);
+            }
             else {
-                console.log("req, false, date:"+ requestDate);
                 requestApod(requestDate);
             }
-        }, 1800000);
+        }, 3600000);
 
         // 1800000 - meia hora
 
