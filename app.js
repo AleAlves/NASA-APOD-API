@@ -8,7 +8,7 @@ var express = require('express'),
   admin = require("firebase-admin");
 
 global.dev = false;
-global.version = "2.2.2";
+global.version = "2.2.3";
 
 var config = {
   apiKey: "AIzaSyA9ci6gRvrszwCafUjEtpaKdfJtkyQy_5Q",
