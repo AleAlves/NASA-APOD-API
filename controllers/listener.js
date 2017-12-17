@@ -18,9 +18,11 @@ module.exports = function (app) {
                 console.log("date < today: "+ requestDate);
                 requestDate = getTodayDate();
                 console.log("updated: "+ requestDate);
+                requestApod(requestDate);
             }
             else {
                 requestApod(requestDate);
+                console.log("new req:"+ requestDate);
             }
         }, 3600000);
 
@@ -55,6 +57,7 @@ module.exports = function (app) {
 
         admin.messaging().sendToDevice(topic, payload).then(function (response) {
             console.log("Successfully sent message:", response);
+            console.log("now req one date:"+ getTomorrowDate());
             requestApod(getTomorrowDate())
         }).catch(function (error) {
             console.log("Error sending message:", error)
