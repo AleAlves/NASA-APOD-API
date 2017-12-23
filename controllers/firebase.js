@@ -17,8 +17,10 @@ module.exports = function (app) {
 
             admin.messaging().sendToDevice(registrationToken, payload).then(function (response) {
                 console.log("Successfully sent message:", response);
+                res.send("Done");
             }).catch(function (error) {
-                console.log("Error sending message:", error)
+                console.log("Error sending message:", error);
+                res.send("Fail");
             });
         }
     };

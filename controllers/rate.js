@@ -5,11 +5,7 @@ module.exports = function (app) {
     var deviceModel = app.models.device;
 
     var RateController = {
-
-        index: function (req, res) {
-            res.render('home/index', {v:version});
-        },
-
+        
         rate: function (req, res) {
             var apodObject = req.body.apod;
             var deviceObject = req.body.device;
@@ -17,6 +13,9 @@ module.exports = function (app) {
 
             if (apodModel != null && rateObject != null && deviceModel != null) {
                 deviceHandler();
+            }
+            else{
+                res.send();
             }
 
             function deviceHandler() {

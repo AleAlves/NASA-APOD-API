@@ -4,10 +4,12 @@ module.exports = function (app) {
     var topController = app.controllers.top;
     var firebaseController = app.controllers.firebase;
     var listenerController = app.controllers.listener;
+    var serviceController = app.controllers.service;
 
+    app.get('/api/version', serviceController.version);
     app.get('/api/push', firebaseController.push);
     app.post('/api/rate', rateController.rate);
-    app.get('/api/top', topController.top);
-    app.get('/', rateController.index);
+    app.post('/api/top', topController.top);
+    app.get('/', serviceController.index);
   
   }

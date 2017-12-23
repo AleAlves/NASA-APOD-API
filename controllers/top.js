@@ -5,20 +5,21 @@ module.exports = function (app) {
 
     var TopController = {
         top: function (req, res) {
+        
+            console.log("Lista de favoritos"+ req.body.listSize);
 
-
-            console.log("Lista de favoritos");
+            var listSize = req.body.listSize;
 
             getCount();
 
             function getCount() {
                 deviceModel.find().count(function (error, count) {
-                    getTopRated(count);
+                    getTopRated();
                 });
             }
 
-            function getTopRated(count) {
-                apodModel.find({}).limit(10).sort({ averageRate: -1 }).select({
+            function getTopRated() {
+                apodModel.find({}).limit(parseInt(listSize)).sort({ averageRate: -1 }).select({
                     id: 1,
                     date: 1,
                     explanation: 1,
