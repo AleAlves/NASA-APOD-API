@@ -15,14 +15,20 @@ module.exports = function (app) {
                 checkTodayApod(requestDate);
             }
             else if(requestDate < getTodayDate()){
+                if(dev){
                 console.log("date < today: "+ requestDate);
+                }
                 requestDate = getTodayDate();
+                if(dev){
                 console.log("updated: "+ requestDate);
+                }
                 requestApod(requestDate);
             }
             else {
                 requestApod(requestDate);
+                if(dev){
                 console.log("new req:"+ requestDate);
+                }
             }
         }, 3600000);
 
@@ -33,7 +39,9 @@ module.exports = function (app) {
             const https = require('https');
             var hasApod = false;
             https.get('https://api.nasa.gov/planetary/apod?api_key=NTZlQrZD1ugcnmBxdBPa56kbYXut0sEhZen5fMbN&date=' + date, (resp) => {
+                if(dev){
                 console.log("Request: " + date + " Status code: " + resp.statusCode + " - " + Date());
+                }
                 if (resp.statusCode == 200) {
                     sendPush(date);
                 }
