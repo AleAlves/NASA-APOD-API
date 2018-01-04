@@ -10,6 +10,7 @@ module.exports = function (app) {
     app.get('/api/push', firebaseController.push);
     app.post('/api/rate', rateController.rate);
     app.post('/api/top', topController.top);
+    app.post('/api/device', topController.device);
     app.get('/', serviceController.index);
   
   }
