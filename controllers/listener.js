@@ -14,20 +14,20 @@ module.exports = function (app) {
             if (requestDate == getTodayDate()) {
                 checkTodayApod(requestDate);
             }
-            else if(requestDate < getTodayDate()){
-                if(dev){
-                console.log("date < today: "+ requestDate);
+            else if (requestDate < getTodayDate()) {
+                if (dev) {
+                    console.log("date < today: " + requestDate);
                 }
                 requestDate = getTodayDate();
-                if(dev){
-                console.log("updated: "+ requestDate);
+                if (dev) {
+                    console.log("updated: " + requestDate);
                 }
                 requestApod(requestDate);
             }
             else {
                 requestApod(requestDate);
-                if(dev){
-                console.log("new req:"+ requestDate);
+                if (dev) {
+                    console.log("new req:" + requestDate);
                 }
             }
         }, 3600000);
@@ -39,8 +39,8 @@ module.exports = function (app) {
             const https = require('https');
             var hasApod = false;
             https.get('https://api.nasa.gov/planetary/apod?api_key=NTZlQrZD1ugcnmBxdBPa56kbYXut0sEhZen5fMbN&date=' + date, (resp) => {
-                if(dev){
-                console.log("Request: " + date + " Status code: " + resp.statusCode + " - " + Date());
+                if (dev) {
+                    console.log("Request: " + date + " Status code: " + resp.statusCode + " - " + Date());
                 }
                 if (resp.statusCode == 200) {
                     sendPush(date);
@@ -55,7 +55,7 @@ module.exports = function (app) {
     function sendPush(date) {
 
         var topic = "/topics/apod";
-        
+
         var payload = {
             notification: {
                 title: "NASA APOD app",
@@ -65,8 +65,8 @@ module.exports = function (app) {
 
         admin.messaging().sendToDevice(topic, payload).then(function (response) {
             console.log("Successfully sent message:", response);
-            console.log("now req one date:"+ getTomorrowDate());
-            requestApod(getTomorrowDate())
+            console.log("now req one date:" + getTomorrowDate());
+            requestApod(getTomorrowDate(date))
         }).catch(function (error) {
             console.log("Error sending message:", error)
             requestApod(date)
@@ -75,13 +75,12 @@ module.exports = function (app) {
 
     function getTodayDate() {
         var d = new Date();
-        return d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+        return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
     }
 
-    function getTomorrowDate() {
-        var d = new Date();
-        d.setDate(d.getDate() + 1);
-        return d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+    function getTomorrowDate(date) {
+        date.setDate(date.getDate() + 1);
+        return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     }
 
     return listenerController;
