@@ -8,6 +8,7 @@ var express = require('express'),
   admin = require("firebase-admin");
 
 global.dev = false;
+global.user = process.env.USER;
 global.version = "4.0.3";
 
 var config = {

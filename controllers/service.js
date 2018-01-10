@@ -4,7 +4,7 @@ module.exports = function (app) {
     var ServiceController = {
 
         index: function (req, res) {
-            res.render('home/index', { v: version });
+            res.render('home/index', { v: version, u: user });
         },
 
         version: function (req, res) {
