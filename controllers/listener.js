@@ -54,7 +54,7 @@ module.exports = function (app) {
 
     function sendPush(date) {
 
-        var topic = "/topics/apod";
+        var topic = "";
 
         var payload = {
             notification: {
