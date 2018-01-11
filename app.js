@@ -7,18 +7,12 @@ var express = require('express'),
   helmet = require('helmet'),
   admin = require("firebase-admin");
 
-global.dev = false;
-global.user = process.env.XABLAU;
+console.log("EV: "+process.env.ATLAS);
+console.log("EV: "+process.env.FIREBASE_PASSWD);
 
-console.log("EV: "+process.env.XABLAU);
-global.version = "4.0.4";
+global.version = "4.0.";
 
-var config = {
-  apiKey: "AIzaSyA9ci6gRvrszwCafUjEtpaKdfJtkyQy_5Q",
-  authDomain: "nasa-apod-app-797fd.firebaseapp.com",
-};
-
-var serviceAccount = require("./nasa-apod-app-797fd-firebase-adminsdk-vpwzc-6da49d69c5.json");
+var serviceAccount = require(process.env.FIREBASE_PASSWD);
 
 global.admin = admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -29,7 +23,7 @@ if (dev) {
   database = 'mongodb://localhost:27017/database';
 }
 else {
-  database = 'mongodb://ale-api:dovaHkiin@apodratewebapp-shard-00-00-b0o6a.mongodb.net:27017,apodratewebapp-shard-00-01-b0o6a.mongodb.net:27017,apodratewebapp-shard-00-02-b0o6a.mongodb.net:27017/databse?ssl=true&replicaSet=apodRateWebApp-shard-0&authSource=admin';
+  database = process.env.atlas;
 }
 
 global.db = mongoose.createConnection(database, {
