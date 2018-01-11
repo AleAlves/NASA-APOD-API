@@ -8,11 +8,9 @@ var express = require('express'),
   admin = require("firebase-admin");
 
 console.log("EV: "+process.env.ATLAS);
-console.log("EV: "+process.env.FIREBASE_PASSWD);
+global.version = "4.0.";
 
-global.version = "4.0.5";
-
-var serviceAccount = require(process.env.FIREBASE_PASSWD);
+var serviceAccount = require("./nasa-apod-app-797fd-firebase-adminsdk-vpwzc-6da49d69c5.json");
 
 global.admin = admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -23,7 +21,7 @@ if (dev) {
   database = 'mongodb://localhost:27017/database';
 }
 else {
-  database = process.env.atlas;
+  database = process.env.ATLAS;
 }
 
 global.db = mongoose.createConnection(database, {
