@@ -8,8 +8,10 @@ var express = require('express'),
   admin = require("firebase-admin");
 
 global.dev = false;
-global.user = process.env.USER;
-global.version = "4.0.3";
+global.user = process.env.XABLAU;
+
+console.log("EV: "+process.env.XABLAU);
+global.version = "4.0.4";
 
 var config = {
   apiKey: "AIzaSyA9ci6gRvrszwCafUjEtpaKdfJtkyQy_5Q",
