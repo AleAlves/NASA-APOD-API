@@ -10,7 +10,7 @@ var express = require('express'),
 console.log("EV: "+process.env.ATLAS);
 console.log("EV: "+process.env.FIREBASE_PASSWD);
 
-global.version = "4.0.";
+global.version = "4.0.5";
 
 var serviceAccount = require(process.env.FIREBASE_PASSWD);
 
