@@ -8,7 +8,9 @@ var express = require('express'),
   admin = require("firebase-admin");
 
 global.dev = false;
-console.log("EV: "+process.env.ATLAS);
+global.version = "4.1.0";
+global.database_link = process.env.ATLAS;
+console.log("EV: "+database_link);
 
 var serviceAccount = require("./nasa-apod-app-797fd-firebase-adminsdk-vpwzc-6da49d69c5.json");
 
