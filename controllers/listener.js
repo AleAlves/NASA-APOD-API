@@ -30,7 +30,7 @@ module.exports = function (app) {
                     console.log("new req:" + requestDate);
                 }
             }
-        }, 10000);
+        }, 3600000);
 
         // 1800000 - meia hora - 3600000
 
