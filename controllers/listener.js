@@ -30,9 +30,9 @@ module.exports = function (app) {
                     console.log("new req:" + requestDate);
                 }
             }
-        }, 3600000);
+        }, 10000);
 
-        // 1800000 - meia hora
+        // 1800000 - meia hora - 3600000
 
         function checkTodayApod(date) {
 
@@ -54,7 +54,7 @@ module.exports = function (app) {
 
     function sendPush(date) {
 
-        var topic = "";
+        var topic = "/topics/apod";
 
         var payload = {
             notification: {
@@ -66,7 +66,7 @@ module.exports = function (app) {
         admin.messaging().sendToDevice(topic, payload).then(function (response) {
             console.log("Successfully sent message:", response);
             console.log("now req one date:" + getTomorrowDate());
-            requestApod(getTomorrowDate(date))
+            requestApod(getTomorrowDate())
         }).catch(function (error) {
             console.log("Error sending message:", error)
             requestApod(date)
@@ -78,7 +78,8 @@ module.exports = function (app) {
         return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
     }
 
-    function getTomorrowDate(date) {
+    function getTomorrowDate() {
+        var date = new Date();
         date.setDate(date.getDate() + 1);
         return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     }
