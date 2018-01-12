@@ -9,8 +9,6 @@ var express = require('express'),
 
 global.dev = false;
 console.log("EV: "+process.env.ATLAS);
-global.version = "4.0.6";
-console.log("Version: "+ global.version);
 
 var serviceAccount = require("./nasa-apod-app-797fd-firebase-adminsdk-vpwzc-6da49d69c5.json");
 
