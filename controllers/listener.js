@@ -43,7 +43,9 @@ module.exports = function (app) {
                     console.log("Request: " + date + " Status code: " + resp.statusCode + " - " + Date());
                 }
                 if (resp.statusCode == 200) {
-                    sendPush(date);
+                    if (pushServiceOnline) {
+                        sendPush(date);
+                    }
                 }
                 else {
                     requestApod(date);

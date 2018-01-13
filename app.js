@@ -8,9 +8,12 @@ var express = require('express'),
   admin = require("firebase-admin");
 
 global.dev = false;
-global.version = "4.2.0";
+global.version = "4.3.0";
 global.database_link = process.env.ATLAS;
-console.log("EV: "+database_link);
+global.pushServiceOnline = process.env.PUSH;
+
+console.log("EV: " + database_link);
+console.log("EV:" + pushServiceOnline);
 
 var serviceAccount = require("./nasa-apod-app-797fd-firebase-adminsdk-vpwzc-6da49d69c5.json");
 
@@ -23,7 +26,7 @@ if (dev) {
   database = 'mongodb://localhost:27017/database';
 }
 else {
-  database = process.env.ATLAS;
+  database = database_link;
 }
 
 global.db = mongoose.createConnection(database, {
@@ -40,7 +43,7 @@ app.use(helmet());
 load('models').then('controllers').then('routes').into(app);
 
 app.listen(8080, function () {
-  console.log("apod server version: "+ version);
+  console.log("apod server version: " + version);
   console.log("dev:" + dev);
 });
 
