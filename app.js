@@ -5,17 +5,21 @@ var express = require('express'),
   mongoose = require('mongoose'),
   bodyParser = require('body-parser'),
   helmet = require('helmet'),
-  admin = require("firebase-admin");
+  admin = require("firebase-admin"),
+  assert = require('assert');
 
-global.version = "4.5.0";
 global.dev = process.env.DEV;
+global.version = process.env.VERSION;
 global.database_link = process.env.ATLAS;
+global.firebase = process.env.FIREBASE_PASSWD;
 global.pushServiceOnline = process.env.PUSH;
 
-console.log("EV: " + database_link);
-console.log("EV:" + pushServiceOnline);
-
-var serviceAccount = require("./nasa-apod-app-797fd-firebase-adminsdk-vpwzc-6da49d69c5.json");
+console.log("Dev:" + dev);
+console.log("Push:" + pushServiceOnline);
+console.log("Atlas: " + database_link);
+console.log("Firebase: " + firebase);
+console.log("Version: " + version);
+var serviceAccount = require(firebase);
 
 global.admin = admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -28,13 +32,9 @@ if (dev) {
 else {
   database = database_link;
 }
-
-// database = database_link;
-
-global.db = mongoose.createConnection(database, {
-  useMongoClient: true
-});
-
+var uri = database_link;
+var options = { promiseLibrary: require('bluebird'), useMongoClient: true };
+global.db = mongoose.createConnection(uri, options);
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
