@@ -31,8 +31,6 @@ module.exports = function (app) {
                     averageRate: 1,
                     votes: 1
                 }).exec(function (error, callback) {
-                    if (dev)
-                        console.log(callback);
                     res.send(callback);
                 });
             }
