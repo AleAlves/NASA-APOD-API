@@ -144,6 +144,8 @@ module.exports = function (app) {
             function response(res, status) {
                 var data = new Object();
                 data.done = String(status);
+                console.log("___");
+                console.log(JSON.stringify(data));
                 res.send(JSON.stringify(data));
             }
         },
