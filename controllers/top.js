@@ -5,8 +5,8 @@ module.exports = function (app) {
 
     var TopController = {
         top: function (req, res) {
-        
-            console.log("Lista de favoritos"+ req.body.listSize);
+
+            console.log("Lista de favoritos" + req.body.listSize);
 
             var listSize = req.body.listSize;
 
@@ -31,38 +31,38 @@ module.exports = function (app) {
                     averageRate: 1,
                     votes: 1
                 }).exec(function (error, callback) {
-                    
+                    if (dev)
                         console.log(callback);
                     res.send(callback);
                 });
             }
         },
 
-    device: function(req, res){
-        console.log("Lista de melhores para device"+ req.body.listSize);
+        device: function (req, res) {
+            console.log("Lista de melhores para device" + req.body.listSize);
 
-        var listSize = req.body.listSize;
-        var deviceName = req.body.deviceName;
+            var listSize = req.body.listSize;
+            var deviceName = req.body.deviceName;
 
-        getCount();
+            getCount();
 
-        function getCount() {
-            deviceModel.find().count(function (error, count) {
-                getDeviceTopRated();
-            });
-        }
+            function getCount() {
+                deviceModel.find().count(function (error, count) {
+                    getDeviceTopRated();
+                });
+            }
 
-        function getDevices() {
-            deviceModel.find({'deviceName': deviceName}).select({
-                _id : 1
-            }).exec(function (error, callback) {
-                if (dev)
-                    getDeviceTopRated(callback);
-            });
-        }
+            function getDevices() {
+                deviceModel.find({ 'deviceName': deviceName }).select({
+                    _id: 1
+                }).exec(function (error, callback) {
+                    if (dev)
+                        getDeviceTopRated(callback);
+                });
+            }
 
-        function getDeviceTopRated(id) {
-                apodModel.find({'deviceId': id}).limit(parseInt(listSize)).sort({ averageRate: -1 }).select({
+            function getDeviceTopRated(id) {
+                apodModel.find({ 'deviceId': id }).limit(parseInt(listSize)).sort({ averageRate: -1 }).select({
                     id: 1,
                     date: 1,
                     explanation: 1,
@@ -79,8 +79,8 @@ module.exports = function (app) {
                     res.send(callback);
                 });
             }
-    }
-    
+        }
+
     };
     return TopController;
 };
