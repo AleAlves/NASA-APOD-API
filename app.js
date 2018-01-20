@@ -7,8 +7,8 @@ var express = require('express'),
   helmet = require('helmet'),
   admin = require("firebase-admin");
 
-global.dev = true;
-global.version = "4.4.0";
+global.version = "4.5.0";
+global.dev = process.env.DEV;
 global.database_link = process.env.ATLAS;
 global.pushServiceOnline = process.env.PUSH;
 
