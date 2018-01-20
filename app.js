@@ -7,8 +7,8 @@ var express = require('express'),
   helmet = require('helmet'),
   admin = require("firebase-admin");
 
-global.dev = false;
-global.version = "4.3.0";
+global.dev = true;
+global.version = "4.4.0";
 global.database_link = process.env.ATLAS;
 global.pushServiceOnline = process.env.PUSH;
 
@@ -28,6 +28,8 @@ if (dev) {
 else {
   database = database_link;
 }
+
+// database = database_link;
 
 global.db = mongoose.createConnection(database, {
   useMongoClient: true

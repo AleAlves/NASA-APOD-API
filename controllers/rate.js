@@ -131,18 +131,20 @@ module.exports = function (app) {
                 apod.save(function (error) {
                     if (error) {
                         console.log("Error - Rate update - step 1");
-                        response(res);
+                        response(res, false);
                     }
                     else {
                         if (dev)
                             console.log("rate media atualizado");
-                        response(res);
+                        response(res,true);
                     }
                 });
             }
 
-            function response(res) {
-                res.send("ok");
+            function response(res, status) {
+                var data = new Object();
+                data.done = String(status);
+                res.send(JSON.stringify(data));
             }
         },
     };
