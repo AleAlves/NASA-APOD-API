@@ -5,7 +5,7 @@ module.exports = function (app) {
     var deviceModel = app.models.device;
 
     var RateController = {
-        
+
         rate: function (req, res) {
             var apodObject = req.body.apod;
             var deviceObject = req.body.device;
@@ -14,7 +14,7 @@ module.exports = function (app) {
             if (apodModel != null && rateObject != null && deviceModel != null) {
                 deviceHandler();
             }
-            else{
+            else {
                 res.send();
             }
 
@@ -116,16 +116,13 @@ module.exports = function (app) {
 
             function updateAvaregeRate(apod) {
 
-                if (dev)
-                    console.log("Avarage rate");
-
                 var i;
                 var sum = 0;
                 for (i = 0; i < apod.rates.length; i++) {
                     sum = sum + apod.rates[i].rateValue;
                 }
-                if (dev)
-                    console.log("sum: " + sum + " avarage:" + Math.round(sum / i) + " i: " + i);
+
+                console.log("sum: " + sum + " avarage:" + Math.round(sum / i) + " i: " + i);
                 apod.averageRate = Math.round(sum / i);
                 apod.votes = i++;
                 apod.save(function (error) {
@@ -134,9 +131,8 @@ module.exports = function (app) {
                         response(res, false);
                     }
                     else {
-                        if (dev)
-                            console.log("rate media atualizado");
-                        response(res,true);
+                        console.log("rate media atualizado");
+                        response(res, true);
                     }
                 });
             }

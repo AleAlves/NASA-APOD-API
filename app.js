@@ -10,7 +10,6 @@ var express = require('express'),
 
 global.dev = process.env.DEV;
 global.version = process.env.VERSION;
-global.database_link = process.env.ATLAS;
 global.firebase = process.env.FIREBASE_PASSWD;
 global.pushServiceOnline = process.env.PUSH;
 
@@ -20,13 +19,8 @@ global.admin = admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-var database = null;
-if (dev) {
-  database = 'mongodb://localhost:27017/database';
-}
-else {
-  database = database_link;
-}
+var database = process.env.ATLAS || 'mongodb://localhost:27017/database';
+
 var uri = database_link;
 var options = { promiseLibrary: require('bluebird'), useMongoClient: true };
 global.db = mongoose.createConnection(uri, options);
@@ -47,7 +41,7 @@ load('models').then('controllers').then('routes').into(app);
 app.listen(8080, function () {
   console.log("Dev:" + dev);
   console.log("Push:" + pushServiceOnline);
-  console.log("Atlas: " + database_link);
+  console.log("Atlas: " + database);
   console.log("Firebase: " + firebase);
   console.log("Version: " + version);
 });

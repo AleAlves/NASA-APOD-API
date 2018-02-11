@@ -7,7 +7,7 @@ module.exports = function (app) {
     var serviceController = app.controllers.service;
 
     app.get('/api/version', serviceController.version);
-    app.get('/api/push', firebaseController.push);
+    // app.get('/api/push', firebaseController.push);
     app.post('/api/rate', rateController.rate);
     app.post('/api/top', topController.top);
     app.post('/api/device', topController.device);

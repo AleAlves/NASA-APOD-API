@@ -8,9 +8,6 @@ module.exports = function (app) {
         },
 
         version: function (req, res) {
-            if (dev) {
-                console.log("Req");
-            }
             var data = new Object();
             data.version = version;
             res.send(JSON.stringify(data));
