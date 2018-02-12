@@ -11,7 +11,7 @@ module.exports = function (app) {
             var deviceObject = req.body.device;
             var rateObject = req.body.rate;
 
-            if (apodModel != null && rateObject != null && deviceModel != null) {
+            if (apodModel != null && rateObject != null && deviceModel != null && rateObject.rateValue != 0 && rateObject.rateValue < 6) {
                 deviceHandler();
             }
             else {
