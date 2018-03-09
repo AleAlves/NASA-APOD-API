@@ -15,6 +15,6 @@
     "mongoose": "^4.12.3"
   },
   "scripts": {
-    "start": "npm start"
+    "start": "node app.js"
   }
 }
