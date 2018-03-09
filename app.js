@@ -21,7 +21,7 @@ global.admin = admin.initializeApp({
 
 var database = process.env.ATLAS || 'mongodb://localhost:27017/database';
 
-var uri = database_link;
+var uri = database;
 var options = { promiseLibrary: require('bluebird'), useMongoClient: true };
 global.db = mongoose.createConnection(uri, options);
 Band = db.model('band-promises', { name: String });
