@@ -1,11 +1,11 @@
 
-## [0.0.0] - 2019-01-03
+## [2.0.0] - 2019-03-16
 
 ### Added
-- Added
+- All New files
 
 ### Changed
-- Changed
+- Version 1.0.0 -> 2.0.0
 
 ### Deleted
-- Deleted
+- All old files
