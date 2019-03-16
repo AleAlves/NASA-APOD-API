@@ -3,6 +3,7 @@ module.exports = function (app) {
     const userModel = app.models.user;
     const userObject = app.models.user;
     const cryptoUtil = app.security.crypto;
+    
     const jsonWebToken = require('jwt-simple');
 
     return LoginController = {
@@ -13,7 +14,7 @@ module.exports = function (app) {
 
             let params = {
                 publicKey: cryptoUtil.RSA.publicKey(),
-                statusQuo: HTTP_STATUS.SUCESS.OK
+                status: HTTP_STATUS.SUCESS.OK
             };
 
             res.send(params);
@@ -33,7 +34,7 @@ module.exports = function (app) {
 
             let params = {
                 ticket: cryptoUtil.RSA.encrypt(ticket),
-                statusQuo: HTTP_STATUS.SUCESS.OK
+                status: HTTP_STATUS.SUCESS.OK
             };
 
             res.send(params);
@@ -92,7 +93,7 @@ module.exports = function (app) {
             function sendError(res, message, httpStatus) {
                 let params = {
                     message: message,
-                    statusQuo: httpStatus,
+                    status: httpStatus,
                     body: null
                 };
 
@@ -110,7 +111,7 @@ module.exports = function (app) {
 
                 let params = {
                     message: message,
-                    statusQuo: httpStatus,
+                    status: httpStatus,
                     body: jsonWebToken.encode(token, secret)
                 };
                 res.send(params);
