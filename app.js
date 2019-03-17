@@ -1,3 +1,9 @@
+global.packageInfo = require('./package.json');
+
+global.HTTP_STATUS = require('./httpStatus.json');
+
+process.env.TZ = 'America/Sao_Paulo';
+
 const port = process.env.PORT || 8083;
 
 const databaseURI = process.env.DB_TOKEN_URI || 'mongodb://localhost:27017/'+packageInfo.name+'-database';
@@ -21,12 +27,6 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const app = express();
-
-global.packageInfo = require('./package.json');
-
-global.HTTP_STATUS = require('./httpStatus.json');
-
-process.env.TZ = 'America/Sao_Paulo';
 
 //Database
 

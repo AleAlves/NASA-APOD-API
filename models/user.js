@@ -9,7 +9,7 @@ module.exports = function (app) {
         email: { type: String, unique: true, required: true },
         birthday: { type: String, required: false },
         pic: { type: String, required: true },
-        firebaseUid: { type: String, required: true },
+        firebaseUid: { type: String, required: false },
         link: { type: String, required: false },
 
     }, { usePushEach: true });
