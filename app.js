@@ -2,6 +2,8 @@ global.packageInfo = require('./package.json');
 
 global.HTTP_STATUS = require('./httpStatus.json');
 
+global.jsonWebTokenSecret = process.env.JSON_WEB_TOKEN_SECRET || '123';
+
 process.env.TZ = 'America/Sao_Paulo';
 
 const port = process.env.PORT || 8083;

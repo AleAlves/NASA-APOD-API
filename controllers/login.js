@@ -1,9 +1,9 @@
 module.exports = function (app) {
 
-    const userModel = app.models.user;
-    const userObject = app.models.user;
+    var userModel = app.models.user;
+    var user = app.models.user;
     const cryptoUtil = app.security.crypto;
-    
+
     const jsonWebToken = require('jwt-simple');
 
     return LoginController = {
@@ -26,7 +26,7 @@ module.exports = function (app) {
 
             console.log(JSON.stringify(req.body));
 
-            let ticket = cryptoUtil.RSA.decrypt(req.body.arg0, 'json');
+            let ticket = cryptoUtil.RSA.decrypt(req.body.content, 'json');
 
             console.log("\nticket:\n");
 
@@ -42,24 +42,26 @@ module.exports = function (app) {
 
         login: function (req, res) {
 
-            console.log("\nlogin\n");
+            console.log("\n\nlogin");
 
-            userObject = req.body.arg0;
+            let content = req.body.content;
+
+            console.log("\n\nlogin - content: " + content);
 
             let ticket = JSON.parse(cryptoUtil.RSA.decrypt(req.headers.ticket));
 
-            console.log("\nlogin - ticket: " + JSON.stringify(ticket));
+            console.log("\n\nlogin - ticket: " + JSON.stringify(ticket));
 
-            console.log("\nlogin - req: \n", JSON.stringify(req.body));
+            console.log("\n\nlogin - user data:" + JSON.stringify(cryptoUtil.AES.decrypt(content, ticket)));
 
-            console.log("\nUser email: \n", cryptoUtil.AES.decrypt(userObject, ticket));
+            user = cryptoUtil.AES.decrypt(content, ticket);
 
-            userObject = cryptoUtil.AES.decrypt(userObject, ticket);
+            console.log("\n\n --- - - -- - -- - - -\n");
 
-            console.log("\nUser Dec: \n" + JSON.stringify(userObject));
+            console.log("\n\nlogin - user object: \n" + JSON.stringify(user));
 
             userModel.findOne({
-                    uid: userObject.uid
+                    uid: user.uid
                 },
                 function (error, response) {
                     if (error) {
@@ -68,25 +70,19 @@ module.exports = function (app) {
 
                         sendError(res, error, HTTP_STATUS.SERVER_ERROR.INTERNAL_SERVER_ERROR);
                     } else if (response == null) {
-
-                        userObject.complains = 0;
-                        userObject.blocked = false;
-                        userModel.create(userObject, function (error, response) {
+                        userModel.create(user, function (error, response) {
                             if (error) {
 
                                 console.log("Error - user - step 2 " + error);
 
                                 sendError(res, error, HTTP_STATUS.SERVER_ERROR.INTERNAL_SERVER_ERROR);
                             } else {
-                                console.log("User created: " + userObject.link);
-
-                                req.session.user = response;
-                                sendToken(req, res, "user created", HTTP_STATUS.SUCESS.CREATED, cryptoUtil.RSA.decrypt(req.headers.ticket, 'utf-8'));
+                                console.log("User created: " + user.name);
+                                sendToken(res, response, "User created", HTTP_STATUS.SUCESS.CREATED, cryptoUtil.RSA.decrypt(req.headers.ticket, 'utf-8'));
                             }
                         });
                     } else {
-                        req.session.user = response;
-                        sendToken(req, res, "User already exists", HTTP_STATUS.SUCESS.ACCEPTED, cryptoUtil.RSA.decrypt(req.headers.ticket, 'utf-8'));
+                        sendToken(res, response, "User already exists", HTTP_STATUS.SUCESS.ACCEPTED, cryptoUtil.RSA.decrypt(req.headers.ticket, 'utf-8'));
                     }
                 });
 
@@ -101,9 +97,9 @@ module.exports = function (app) {
                 res.send(params);
             }
 
-            function sendToken(req, res, message, httpStatus, ticket) {
+            function sendToken(res, user, message, httpStatus, ticket) {
                 let token = {
-                    user: req.session.user,
+                    user: user,
                     ticket: JSON.parse(ticket)
                 };
 
@@ -112,7 +108,7 @@ module.exports = function (app) {
                 let params = {
                     message: message,
                     status: httpStatus,
-                    body: jsonWebToken.encode(token, secret)
+                    token: jsonWebToken.encode(token, jsonWebTokenSecret)
                 };
                 res.send(params);
             }

@@ -34,7 +34,8 @@ module.exports = function (app) {
     //RSA
     const NodeRSA = require('node-rsa');
     // console.log("RSA PVTK: "+ RSAPrivateKey);
-    const RSAKey = new NodeRSA(RSAPrivateKey);
+    const RSAKey = new NodeRSA({b: 1024});
+    // const RSAKey = new NodeRSA(RSAPrivateKey);
 
     const CryptoJS = require('crypto-js');
 
@@ -75,6 +76,7 @@ module.exports = function (app) {
                     mode: CryptoJS.mode.CBC
                 });
 
+                console.log('\n ---- CRYPTO -----');
                 console.log('iv: ' + iv);
                 console.log('key: ' + password);
                 console.log('salt: ' + salt);
@@ -87,6 +89,7 @@ module.exports = function (app) {
                 });
                 console.log("\nDecrypted Hex: " + decrypted.toString(CryptoJS.enc.Hex));
                 console.log("\nDecrypted utf-8: " + decrypted.toString(CryptoJS.enc.Utf8));
+                console.log('\n ---- CRYPTO -----\n');
             },
 
             encrypt: function (plaintData, ticket) {
@@ -118,10 +121,12 @@ module.exports = function (app) {
                     keySize: 8,
                     iterations: 2048
                 });
+                console.log('\n ---- CRYPTO -----');
                 console.log('iv: ' + iv);
                 console.log('key: ' + key);
                 console.log('salt: ' + salt);
                 console.log('cipherData: ' + cipherData);
+                console.log('\n ---- CRYPTO -----\n');
                 return JSON.parse(CryptoJS.AES.decrypt(cipherData, keyBits, {
                     iv: CryptoJS.enc.Base64.parse(iv),
                     padding: CryptoJS.pad.Pkcs7,
