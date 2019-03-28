@@ -1,15 +1,14 @@
 module.exports = (app) => {
 
+    const axios = require('axios');
+
     return APODController = {
 
         apod: function (req, res) {
 
-            const axios = require('axios');
-
             axios.get('https://api.nasa.gov/planetary/apod?api_key='+ nasa_api_key)
                 .then(response => {
-                    console.log(JSON.stringify(response.data));
-                    console.log(response.data.explanation);
+                    console.log("\nAPOD Data: \n"+JSON.stringify(response.data));
                     var response = {
                         apod: response.data,
                         status: HTTP_STATUS.SUCESS.OK
