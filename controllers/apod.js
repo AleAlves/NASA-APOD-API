@@ -6,7 +6,9 @@ module.exports = (app) => {
 
         apod: function (req, res) {
 
-            axios.get('https://api.nasa.gov/planetary/apod?api_key='+ nasa_api_key)
+            console.log("\n * Date"+req.body.date);
+
+            axios.get('https://api.nasa.gov/planetary/apod?api_key='+ nasa_api_key+"&date="+req.body.date)
                 .then(response => {
                     console.log("\nAPOD Data: \n"+JSON.stringify(response.data));
                     var response = {
