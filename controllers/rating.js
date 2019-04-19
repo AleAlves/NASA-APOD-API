@@ -16,7 +16,7 @@ module.exports = (app) => {
             };
 
             rateModel.findOne({
-                    'date': req.body.rate.date,
+                    'date': req.body.date,
                     'rates.uid': user.uid
                 },
                 function (error, response) {
