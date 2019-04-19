@@ -16,5 +16,5 @@ module.exports = function (app) {
     
     }, { usePushEach: true });
 
-    return db.model('rate', user);
+    return db.model('rate', rate);
 }
