@@ -46,6 +46,7 @@ module.exports = (app) => {
         rate: function (req, res) {
 
             var httpResponse = {
+                favorite: false,
                 status: HTTP_STATUS.SUCESS.OK
             };
 
@@ -56,7 +57,7 @@ module.exports = (app) => {
             };
 
             rateModel.findOne({
-                    date: req.body.rate.date
+                    date: req.body.date
                 },
                 function (error, response) {
                     if (error) {
@@ -74,8 +75,8 @@ module.exports = (app) => {
                         let rate = Object();
                         rate.rates = Array();
 
-                        rate.date = req.body.rate.date;
-                        rate.pic = req.body.rate.pic;
+                        rate.date = req.body.date;
+                        rate.pic = req.body.pic;
                         rate.rates.push(rater);
 
                         console.log("\nRate Model: \n" + JSON.stringify(rate));
@@ -87,12 +88,14 @@ module.exports = (app) => {
 
                                 httpResponse.status = HTTP_STATUS.SERVER_ERROR.INTERNAL_SERVER_ERROR;
 
-                                res.send(response);
+                                res.send(httpResponse);
 
                             } else {
                                 console.log("\nCreated Rate: \n" + JSON.stringify(response));
 
-                                res.send(response);
+                                httpResponse.favorite = true;
+
+                                res.send(httpResponse);
                             }
                         });
                     } else {
@@ -112,7 +115,10 @@ module.exports = (app) => {
 
                                 console.log("\n+ Rater: \n" + JSON.stringify(response));
                                 response.save(function (error, sucess) {
-                                    res.send(sucess);
+
+                                    httpResponse.favorite = true;
+
+                                    res.send(httpResponse);
                                 });
                             } else {
                                 console.log("\n+ Rater: \n" + JSON.stringify(rate));
@@ -121,7 +127,10 @@ module.exports = (app) => {
 
                                 console.log("\n- Rater: \n" + JSON.stringify(rate));
                                 rate.save(function (error, sucess) {
-                                    res.send(sucess);
+                                    
+                                    httpResponse.favorite = false;
+
+                                    res.send(httpResponse);
                                 });
                             }
                         });
