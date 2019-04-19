@@ -6,12 +6,12 @@ module.exports = (app) => {
 
     return RatingController = {
 
-        status: function (req, res) {
+        favorite: function (req, res) {
 
             let user = jsonWebToken.decode(req.headers.token, jsonWebTokenSecret);
 
             var httpResponse = {
-                like: false,
+                favorite: false,
                 status: HTTP_STATUS.SUCESS.OK
             };
 
@@ -36,7 +36,7 @@ module.exports = (app) => {
 
                         console.log("\nRate status: \n" + JSON.stringify(response));
 
-                        httpResponse.like = true;
+                        httpResponse.favorite = true;
 
                         res.send(httpResponse);
                     }
