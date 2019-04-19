@@ -10,6 +10,8 @@ module.exports = (app) => {
 
             console.log("\n * Token: "+JSON.stringify(jsonWebToken.decode(req.headers.token, jsonWebTokenSecret)));
 
+            var user = jsonWebToken.decode(req.headers.token, jsonWebTokenSecret);
+
             console.log("\n * Date: "+req.body.date);
 
             axios.get('https://api.nasa.gov/planetary/apod?api_key='+ nasa_api_key+"&date="+req.body.date)
@@ -20,12 +22,6 @@ module.exports = (app) => {
                         status: HTTP_STATUS.SUCESS.OK
                     };
                 
-                    rate.findOne({
-                        uid: user.uid
-                    },
-                    function (error, response) {
-
-                    });
                     sendAPOD(res, response);
                 })
                 .catch(error => {
