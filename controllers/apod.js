@@ -1,8 +1,13 @@
 module.exports = (app) => {
 
+    var rate = app.models.rate;
+    const jsonWebToken = require('jwt-simple');
+
     return APODController = {
 
         apod: function (req, res) {
+
+            console.log(JSON.stringify(jsonWebToken.decode(req.headers.token, jsonWebTokenSecret)));
 
             const axios = require('axios');
 
@@ -14,6 +19,13 @@ module.exports = (app) => {
                         apod: response.data,
                         status: HTTP_STATUS.SUCESS.OK
                     };
+                
+                    rate.findOne({
+                        uid: user.uid
+                    },
+                    function (error, response) {
+
+                    });
                     sendAPOD(res, response);
                 })
                 .catch(error => {
