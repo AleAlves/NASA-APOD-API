@@ -12,7 +12,12 @@ module.exports = (app) => {
 
             rateModel.findOne({
                 'rates.uid': user.uid
-            }).select({}).exec(function (error, response) {
+            }).select({
+                'date': 1,
+                'pic': 1
+            }).sort({
+                'date': 1
+            }).exec(function (error, response) {
 
                 if (error) {
 
