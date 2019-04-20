@@ -5,20 +5,31 @@ module.exports = (app) => {
     var rateModel = app.models.rate;
 
     return RatingController = {
-        
-        favorites: function(req, res){
+
+        favorites: function (req, res) {
 
             let user = jsonWebToken.decode(req.headers.token, jsonWebTokenSecret);
-            
+
             rateModel.findOne({
-                'date': req.body.date,
                 'rates.uid': user.uid
             }).select({}).exec(function (error, response) {
-                console.log(JSON.stringify(response));
-                var httpResponse = {
-                    favorites: response,
-                    status: HTTP_STATUS.SUCESS.OK
-                };
+
+                if (error) {
+
+                    httpResponse.status = HTTP_STATUS.SERVER_ERROR.INTERNAL_SERVER_ERROR;
+                    res.send(httpResponse);
+                } else {
+
+                    console.log(JSON.stringify(response));
+
+                    var httpResponse = {
+                        favorites: response,
+                        status: HTTP_STATUS.SUCESS.OK
+                    };
+
+                    res.send(httpResponse);
+                }
+
             });
         },
 
