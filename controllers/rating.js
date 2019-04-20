@@ -113,7 +113,7 @@ module.exports = (app) => {
 
                         rate.date = req.body.date;
                         rate.pic = req.body.pic;
-                        rate.title = req.body.pic;
+                        rate.title = req.body.title;
                         rate.rates.push(rater);
 
                         console.log("\nRate Model: \n" + JSON.stringify(rate));
