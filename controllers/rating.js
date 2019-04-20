@@ -53,7 +53,7 @@ module.exports = (app) => {
             let user = jsonWebToken.decode(req.headers.token, jsonWebTokenSecret);
 
             let rater = {
-                uid: user.uid
+                rater:{uid: user.uid}
             };
 
             rateModel.findOne({
