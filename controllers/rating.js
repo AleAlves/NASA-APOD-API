@@ -8,6 +8,8 @@ module.exports = (app) => {
 
         favorites: function (req, res) {
 
+            console.log("Favorites");
+
             let user = jsonWebToken.decode(req.headers.token, jsonWebTokenSecret);
 
             rateModel.findOne({
@@ -25,6 +27,7 @@ module.exports = (app) => {
                     res.send(httpResponse);
                 } else {
 
+                    console.log("Favorites response");
                     console.log(JSON.stringify(response));
 
                     var httpResponse = {
