@@ -4,7 +4,7 @@ module.exports = function (app) {
 
     var raters = schema({
 
-        uid: { type: String, unique: true, riquered: true }
+        uid: { type: String, unique: false, riquered: true }
     
     }, { usePushEach: true });
 
