@@ -16,7 +16,8 @@ module.exports = (app) => {
                 'rates.uid': user.uid
             }).select({
                 'date': 1,
-                'pic': 1
+                'pic': 1,
+                'title': 1
             }).sort({
                 'date': 1
             }).exec(function (error, response) {
@@ -112,6 +113,7 @@ module.exports = (app) => {
 
                         rate.date = req.body.date;
                         rate.pic = req.body.pic;
+                        rate.title = req.body.pic;
                         rate.rates.push(rater);
 
                         console.log("\nRate Model: \n" + JSON.stringify(rate));

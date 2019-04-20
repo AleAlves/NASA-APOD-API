@@ -12,6 +12,7 @@ module.exports = function (app) {
 
         date: { type: String, unique: true, riquered: true },
         pic: { type: String, riquered: true },
+        title: { type: String, riquered: true },
         rates: [raters]
     
     }, { usePushEach: true });
