@@ -53,11 +53,11 @@ module.exports = (app) => {
             let user = jsonWebToken.decode(req.headers.token, jsonWebTokenSecret);
 
             let rater = {
-                rater:{uid: user.uid}
+                uid: user.uid
             };
 
             rateModel.findOne({
-                    date: req.body.date
+                    'date': req.body.date
                 },
                 function (error, response) {
                     if (error) {
@@ -102,6 +102,7 @@ module.exports = (app) => {
                         console.log("\nHandle  Rater: \n");
 
                         rateModel.findOne({
+                            'date': req.body.date,
                             'rates.uid': user.uid
                         }).select({}).exec(function (error, rate) {
                             if (error) {
@@ -127,7 +128,7 @@ module.exports = (app) => {
 
                                 console.log("\n- Rater: \n" + JSON.stringify(rate));
                                 rate.save(function (error, sucess) {
-                                    
+
                                     httpResponse.favorite = false;
 
                                     res.send(httpResponse);
