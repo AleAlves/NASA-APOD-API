@@ -12,7 +12,7 @@ module.exports = (app) => {
 
             let user = jsonWebToken.decode(req.headers.token, jsonWebTokenSecret);
 
-            rateModel.findOne({
+            rateModel.find({
                 'rates.uid': user.uid
             }).select({
                 'date': 1,
