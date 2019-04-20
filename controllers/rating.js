@@ -5,6 +5,22 @@ module.exports = (app) => {
     var rateModel = app.models.rate;
 
     return RatingController = {
+        
+        favorites: function(req, res){
+
+            let user = jsonWebToken.decode(req.headers.token, jsonWebTokenSecret);
+            
+            rateModel.findOne({
+                'date': req.body.date,
+                'rates.uid': user.uid
+            }).select({}).exec(function (error, response) {
+                console.log(JSON.stringify(response));
+                var httpResponse = {
+                    favorites: response,
+                    status: HTTP_STATUS.SUCESS.OK
+                };
+            });
+        },
 
         favorite: function (req, res) {
 

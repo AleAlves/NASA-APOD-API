@@ -22,6 +22,7 @@ module.exports = (app) => {
   //Rating
   app.post(api_v1+'/rate', RatingController.rate);
   app.post(api_v1+'/favorite', RatingController.favorite);
+  app.post(api_v1+'/favorites', RatingController.favorites);
   
   
 }
