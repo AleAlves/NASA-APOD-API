@@ -19,7 +19,7 @@ module.exports = (app) => {
                 'pic': 1,
                 'title': 1
             }).sort({
-                'date': 1
+                'date': -1
             }).exec(function (error, response) {
 
                 if (error) {
