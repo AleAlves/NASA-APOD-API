@@ -21,7 +21,7 @@ module.exports = (app) => {
                     sendAPOD(res, response);
                 })
                 .catch(error => {
-                    console.log(error);
+                    console.log("\nError: "+error);
                     var response = {
                         apod: response.data,
                         message: error,
