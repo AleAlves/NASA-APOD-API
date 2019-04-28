@@ -23,7 +23,6 @@ module.exports = (app) => {
                 .catch(error => {
                     console.log("\nError: "+error);
                     var response = {
-                        apod: response.data,
                         message: error,
                         status: HTTP_STATUS.SERVER_ERROR.INTERNAL_SERVER_ERROR
                     };
