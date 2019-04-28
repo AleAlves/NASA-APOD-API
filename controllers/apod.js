@@ -13,17 +13,17 @@ module.exports = (app) => {
             axios.get('https://api.nasa.gov/planetary/apod?api_key='+ nasa_api_key+"&date="+req.body.date)
                 .then(response => {
                     console.log("\nAPOD Data: \n"+JSON.stringify(response.data));
-                    var response = {
+                    let params = {
                         apod: response.data,
                         status: HTTP_STATUS.SUCESS.OK
                     };
                 
-                    sendAPOD(res, response);
+                    sendAPOD(res, params);
                 })
                 .catch(error => {
                     console.log("\nError: "+error);
-                    var response = {
-                        message: error,
+                    let response = {
+                        message: "Error",
                         status: HTTP_STATUS.SERVER_ERROR.INTERNAL_SERVER_ERROR
                     };
                     sendAPOD(res, response);
