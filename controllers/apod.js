@@ -23,8 +23,7 @@ module.exports = (app) => {
                 .catch(error => {
                     console.log("\nError: "+error);
                     let response = {
-                        message: "Error",
-                        status: HTTP_STATUS.SERVER_ERROR.INTERNAL_SERVER_ERROR
+                        status: HTTP_STATUS.BUSINESS.UNAVAILABLE_APOD
                     };
                     sendAPOD(res, response);
                 });
