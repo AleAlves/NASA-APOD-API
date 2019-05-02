@@ -9,51 +9,49 @@ module.exports = (app) => {
 
         apod: function (req, res) {
 
-            console.log("\n * Date: "+req.body.date);
+            console.log("\n * Date: " + req.body.date);
 
-            axios.get('https://api.nasa.gov/planetary/apod?api_key='+ nasa_api_key+"&date="+req.body.date)
+            axios.get('https://api.nasa.gov/planetary/apod?api_key=' + nasa_api_key + "&date=" + req.body.date)
                 .then(response => {
-                    console.log("\nAPOD Data: \n"+JSON.stringify(response.data));
+                    console.log("\nAPOD Data: \n" + JSON.stringify(response.data));
                     let params = {
                         apod: response.data,
                         status: HTTP_STATUS.SUCESS.OK
                     };
-                
+
                     sendAPOD(res, params);
                 })
                 .catch(error => {
-                    console.log("\nError: "+error);
+                    console.log("\nError: " + error);
                     let response = {
                         status: HTTP_STATUS.BUSINESS.UNAVAILABLE_APOD
                     };
                     sendAPOD(res, response);
                 });
 
-                function sendAPOD(res, response){
-                    res.send(response);
-                }
+            function sendAPOD(res, response) {
+                res.send(response);
+            }
         }
     }
 
     function requestApod(requestDate) {
 
-        console.log("RequestApod, date: "+ requestDate);
+        console.log("RequestApod, date: " + requestDate);
 
         setTimeout(() => {
             if (requestDate == getTodayDate()) {
                 checkTodayApod(requestDate);
-            }
-            else if (requestDate < getTodayDate()) {
-                
+            } else if (requestDate < getTodayDate()) {
+
                 console.log("date < today: " + requestDate);
                 requestDate = getTodayDate();
-                
+
                 console.log("updated: " + requestDate);
                 requestApod(requestDate);
-            }
-            else {
+            } else {
                 requestApod(requestDate);
-                
+
                 console.log("new req:" + requestDate);
             }
         }, 3600000);
@@ -64,42 +62,37 @@ module.exports = (app) => {
 
             console.log("date:  " + date);
 
-            axios.get('https://api.nasa.gov/planetary/apod?api_key='+ nasa_api_key+"&date="+date)
+            axios.get('https://api.nasa.gov/planetary/apod?api_key=' + nasa_api_key + "&date=" + date)
                 .then(response => {
-                    console.log("\nAPOD verify: \n"+JSON.stringify(response.data));
-                   
+                    console.log("\nAPOD verify: \n" + JSON.stringify(response.data));
+
                     console.log("\nRequest: " + date + " Status code: " + resp.statusCode + " - " + Date());
-                    
+
                     if (response.statusCode == 200) {
-                        if (pushServiceOnline) {
-                            sendPush(date);
-                        }
-                    }
-                    else {
+
+                        sendPush(date);
+                    } else {
+
                         requestApod(date);
                     }
 
                 })
                 .catch(error => {
 
-                    console.log("\nError: "+error);
+                    console.log("\nError: " + error);
                     requestApod(requestDate);
                 });
-
-                function sendAPOD(res, response){
-                    res.send(response);
-                }
         }
     }
 
     function sendPush(date) {
 
-        var topic = "/topics/apod";
+        var topic = "/topics/DailyAPOD";
 
         var payload = {
             notification: {
                 title: "NASA APOD App",
-                body: "new APOD available! ("+getTodayDate()+")"
+                body: "new APOD available! (" + date + ")"
             }
         };
 
