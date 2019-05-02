@@ -4,3 +4,5 @@ npm-debug.log
 .env
 .DS_Store
 package-lock.json
+google-services.json
+nasa-apod-app-797fd-firebase-adminsdk-vpwzc-7f18e9c721.json

@@ -8,7 +8,7 @@ global.nasa_api_key = "NTZlQrZD1ugcnmBxdBPa56kbYXut0sEhZen5fMbN";
 
 process.env.TZ = 'America/Sao_Paulo';
 
-const googleServiceJSON = process.env.GOOGLE_SERVICES_JSON;
+const firebaseKeys = process.env.FIREBASE_ADMIN_SDK_KEYS || './nasa-apod-app-797fd-firebase-adminsdk-vpwzc-7f18e9c721.json';
 
 const port = process.env.PORT || 8083;
 
@@ -34,7 +34,7 @@ const bodyParser = require('body-parser');
 
 const admin = require("firebase-admin");
 
-var serviceAccount = require(googleServiceJSON);
+var serviceAccount = require(firebaseKeys);
 
 const app = express();
 
