@@ -34,9 +34,14 @@ const bodyParser = require('body-parser');
 
 const admin = require("firebase-admin");
 
-var serviceAccount = require(firebaseKeys);
-
 const app = express();
+
+try{
+
+  var serviceAccount = require(firebaseKeys);
+}catch(e){
+  serviceAccount = JSON.parse(firebaseKeys);
+}
 
 global.firebaseAdmin = admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
