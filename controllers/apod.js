@@ -39,7 +39,7 @@ module.exports = (app) => {
 
         console.log("RequestApod, date: "+ requestDate);
 
-        pingRquest(() => {
+        setTimeout(() => {
             if (requestDate == getTodayDate()) {
                 checkTodayApod(requestDate);
             }
