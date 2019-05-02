@@ -3,6 +3,10 @@
         "DUPLICATED_REGISTER":{
             "code":600,
             "status":"Duplicated Register"
+        },
+        "UNAVAILABLE_APOD":{
+            "code":601,
+            "status":"We do not have an APOD for this day"
         }
     },
     "INFORMATIONAL": {

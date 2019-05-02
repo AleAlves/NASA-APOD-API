@@ -3,6 +3,7 @@ module.exports = (app) => {
   const ServiceController = app.controllers.service;
   const LoginController = app.controllers.login;
   const APODController = app.controllers.apod;
+  const RatingController = app.controllers.rating;
 
   const api_v1 = '/api/v1';
 
@@ -17,5 +18,11 @@ module.exports = (app) => {
 
   //APOD
   app.post(api_v1+'/apod', APODController.apod);
+
+  //Rating
+  app.post(api_v1+'/rate', RatingController.rate);
+  app.post(api_v1+'/favorite', RatingController.favorite);
+  app.post(api_v1+'/favorites', RatingController.favorites);
+  
   
 }
