@@ -8,6 +8,8 @@ global.nasa_api_key = "NTZlQrZD1ugcnmBxdBPa56kbYXut0sEhZen5fMbN";
 
 process.env.TZ = 'America/Sao_Paulo';
 
+const googleServiceJSON = process.env.GOOGLE_SERVICES_JSON;
+
 const port = process.env.PORT || 8083;
 
 const databaseURI = process.env.DB_TOKEN_URI || 'mongodb://localhost:27017/'+packageInfo.name+'-database';
@@ -30,7 +32,16 @@ const mongoose = require('mongoose');
 
 const bodyParser = require('body-parser');
 
+const admin = require("firebase-admin");
+
+var serviceAccount = require(googleServiceJSON);
+
 const app = express();
+
+global.firebaseAdmin = admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
 
 //Database
 
