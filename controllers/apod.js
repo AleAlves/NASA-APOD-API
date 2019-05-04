@@ -2,6 +2,7 @@ module.exports = (app) => {
 
     const axios = require('axios');
     var requestDate = getTodayDate();
+    var configModel = app.models.config;
 
     requestApod(requestDate);
 
