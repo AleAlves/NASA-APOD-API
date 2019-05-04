@@ -49,6 +49,9 @@ module.exports = (app) => {
 
                     checkTodayApod(requestDate);
                 }
+                else{
+                    console.log("Request: "+ getTodayDate());
+                }
             });
         }, 36000);
 
