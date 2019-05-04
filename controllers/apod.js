@@ -53,7 +53,7 @@ module.exports = (app) => {
                     console.log("Request: "+ getTodayDate());
                 }
             });
-        }, 36000);
+        }, 3600000);
 
         // Uma hora - 3600000
 
