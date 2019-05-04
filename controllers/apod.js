@@ -65,13 +65,13 @@ module.exports = (app) => {
 
             axios.get('https://api.nasa.gov/planetary/apod?api_key=' + nasa_api_key + "&date=" + date)
                 .then(response => {
-                    console.log("\nAPOD verify: \n" + JSON.stringify(response.data));
+                    console.log("\nAPOD verify: \n" + response);
 
-                    console.log("\nRequest: " + date + " Status code: " + resp.statusCode + " - " + Date());
+                    console.log("\nRequest: " + date + " Status code: " + response.status + " - " + Date());
 
-                    if (response.statusCode == 200) {
+                    if (response.status == 200) {
 
-                        sendPush(date);
+                        sendPush(response.data);
                     } else {
 
                         requestApod(date);
@@ -86,18 +86,18 @@ module.exports = (app) => {
         }
     }
 
-    function sendPush(date) {
+    function sendPush(response) {
 
         var topic = "/topics/DailyAPOD";
 
         var payload = {
             notification: {
                 title: "NASA APOD App",
-                body: "new APOD available! (" + date + ")"
+                body: "new "+ response.media_type +" available! "
             }
         };
 
-        admin.messaging().sendToDevice(topic, payload).then(function (response) {
+        firebaseAdmin.messaging().sendToDevice(topic, payload).then(function (response) {
             console.log("Successfully sent message:", response);
             console.log("now req one date:" + getTomorrowDate());
             requestApod(getTomorrowDate())
