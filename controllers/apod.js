@@ -43,7 +43,7 @@ module.exports = (app) => {
         setTimeout(() => {
 
             configModel.findOne({
-                dailyAPOD: response.data.date
+                dailyAPOD: getTodayDate()
             }, function (error, response) {
                 if (response == null) {
 
@@ -97,22 +97,22 @@ module.exports = (app) => {
             console.log("now req one date:" + getTomorrowDate());
 
             let config = {
-                dailyAPOD: response.data.date
+                dailyAPOD: getTodayDate()
             };
 
             configModel.findOne({
 
-                dailyAPOD: response.data.date
+                dailyAPOD: getTodayDate()
             }, function (error, response) {
 
                 if (response == null) {
 
-                    configModel.dailyAPOD = response.data.date
-                    configModel.crate(config, function (error, response) {
+                    configModel.dailyAPOD = getTodayDate()
+                    configModel.create(config, function (error, response) {
                         requestApod(getTomorrowDate())
                     });
                 } else {
-                    configModel.dailyAPOD = response.data.date
+                    configModel.dailyAPOD = getTodayDate()
                     configModel.save();
                     requestApod(getTomorrowDate())
                 }
