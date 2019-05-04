@@ -41,21 +41,16 @@ module.exports = (app) => {
         console.log("RequestApod, date: " + requestDate);
 
         setTimeout(() => {
-            if (requestDate == getTodayDate()) {
-                checkTodayApod(requestDate);
-            } else if (requestDate < getTodayDate()) {
 
-                console.log("date < today: " + requestDate);
-                requestDate = getTodayDate();
+            configModel.findOne({
+                dailyAPOD: response.data.date
+            }, function (error, response) {
+                if (response == null) {
 
-                console.log("updated: " + requestDate);
-                requestApod(requestDate);
-            } else {
-                requestApod(requestDate);
-
-                console.log("new req:" + requestDate);
-            }
-        }, 3600000);
+                    checkTodayApod(requestDate);
+                }
+            });
+        }, 36000);
 
         // Uma hora - 3600000
 
@@ -93,14 +88,36 @@ module.exports = (app) => {
         var payload = {
             notification: {
                 title: "NASA APOD App",
-                body: "new "+ response.media_type +" available! "
+                body: "new " + response.media_type + " available! "
             }
         };
 
         firebaseAdmin.messaging().sendToDevice(topic, payload).then(function (response) {
             console.log("Successfully sent message:", response);
             console.log("now req one date:" + getTomorrowDate());
-            requestApod(getTomorrowDate())
+
+            let config = {
+                dailyAPOD: response.data.date
+            };
+
+            configModel.findOne({
+
+                dailyAPOD: response.data.date
+            }, function (error, response) {
+
+                if (response == null) {
+
+                    configModel.dailyAPOD = response.data.date
+                    configModel.crate(config, function (error, response) {
+                        requestApod(getTomorrowDate())
+                    });
+                } else {
+                    configModel.dailyAPOD = response.data.date
+                    configModel.save();
+                    requestApod(getTomorrowDate())
+                }
+
+            });
         }).catch(function (error) {
             console.log("Error sending message:", error)
             requestApod(date)
