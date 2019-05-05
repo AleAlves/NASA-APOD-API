@@ -128,7 +128,7 @@ module.exports = (app) => {
 
     function getTodayDate() {
         var d = new Date();
-        return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + (d.getDate()-1);
+        return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
     }
 
     function getTomorrowDate() {
