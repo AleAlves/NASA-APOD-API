@@ -1,10 +1,9 @@
 module.exports = (app) => {
 
     const axios = require('axios');
-    var requestDate = getTodayDate();
     var configModel = app.models.config;
 
-    requestApod(requestDate);
+    requestApod(getTodayDate());
 
     return APODController = {
 
@@ -43,14 +42,15 @@ module.exports = (app) => {
         setTimeout(() => {
 
             configModel.findOne({
-                dailyAPOD: getTodayDate()
+                dailyAPOD: requestDate
             }, function (error, response) {
                 if (response == null) {
 
                     checkTodayApod(requestDate);
                 }
                 else{
-                    console.log("Request: "+ getTodayDate());
+                    console.log("Request: "+ requestDate);
+                    requestApod(getTomorrowDate());
                 }
             });
         }, 3600000);
@@ -69,7 +69,7 @@ module.exports = (app) => {
 
                     if (response.status == 200) {
 
-                        sendPush(response.data);
+                        sendPush(date, response.data);
                     } else {
 
                         requestApod(date);
@@ -79,43 +79,42 @@ module.exports = (app) => {
                 .catch(error => {
 
                     console.log("\nError: " + error);
-                    requestApod(requestDate);
+                    requestApod(date);
                 });
         }
     }
 
-    function sendPush(response) {
+    function sendPush(date, apod) {
 
         var topic = "/topics/DailyAPOD";
 
         var payload = {
             notification: {
                 title: "NASA APOD App",
-                body: "new " + response.media_type + " available! "
+                body: "new " + apod.media_type + " available! "
             }
         };
 
         firebaseAdmin.messaging().sendToDevice(topic, payload).then(function (response) {
-            console.log("Successfully sent message:", response);
-            console.log("now req one date:" + getTomorrowDate());
 
+            console.log("Successfully sent message:", response);
+        
             let config = {
-                dailyAPOD: getTodayDate()
+                dailyAPOD: date
             };
 
-            configModel.findOne({
-
-                dailyAPOD: getTodayDate()
-            }, function (error, response) {
+            configModel.findOne({}, function (error, response) {
 
                 if (response == null) {
 
-                    configModel.dailyAPOD = getTodayDate()
                     configModel.create(config, function (error, response) {
+                
                         requestApod(getTomorrowDate())
                     });
+
                 } else {
-                    configModel.dailyAPOD = getTodayDate()
+                    
+                    configModel.dailyAPOD = date;
                     configModel.save();
                     requestApod(getTomorrowDate())
                 }
@@ -129,7 +128,7 @@ module.exports = (app) => {
 
     function getTodayDate() {
         var d = new Date();
-        return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+        return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + (d.getDate()-1);
     }
 
     function getTomorrowDate() {
