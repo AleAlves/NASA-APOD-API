@@ -1,10 +1,9 @@
 module.exports = (app) => {
 
     const axios = require('axios');
-    var requestDate = getTodayDate();
     var configModel = app.models.config;
 
-    requestApod(requestDate);
+    requestApod(getTodayDate());
 
     return APODController = {
 
@@ -45,12 +44,16 @@ module.exports = (app) => {
             console.log("setTimeout:  ");
 
             configModel.findOne({
-                dailyAPOD: response.data.date
+                dailyAPOD: requestDate
             }, function (error, response) {
 
                 if (response == null) {
 
                     checkTodayApod(requestDate);
+                }
+                else{
+                    console.log("Request: "+ requestDate);
+                    requestApod(getTomorrowDate());
                 }
             });
         }, 3600000);
@@ -69,7 +72,7 @@ module.exports = (app) => {
 
                     if (response.status == 200) {
 
-                        sendPush(response.data);
+                        sendPush(date, response.data);
                     } else {
 
                         requestApod(date);
@@ -84,41 +87,37 @@ module.exports = (app) => {
         }
     }
 
-    function sendPush(response) {
+    function sendPush(date, apod) {
 
         var topic = "/topics/DailyAPOD";
 
         var payload = {
             notification: {
                 title: "NASA APOD App",
-                body: "new " + response.media_type + " available! "
+                body: "new " + apod.media_type + " available! "
             }
         };
 
         firebaseAdmin.messaging().sendToDevice(topic, payload).then(function (response) {
 
             console.log("Successfully sent message:", response);
-            console.log("now req one date:" + getTomorrowDate());
-
+        
             let config = {
-                dailyAPOD: response.data.date
+                dailyAPOD: date
             };
 
-            configModel.findOne({
-
-                dailyAPOD: response.data.date
-            }, function (error, response) {
+            configModel.findOne({}, function (error, response) {
 
                 if (response == null) {
 
-                    configModel.dailyAPOD = response.data.date
-                    configModel.crate(config, function (error, response) {
-
+                    configModel.create(config, function (error, response) {
+                
                         requestApod(getTomorrowDate())
                     });
-                } else {
 
-                    configModel.dailyAPOD = response.data.date
+                } else {
+                    
+                    configModel.dailyAPOD = date;
                     configModel.save();
                     requestApod(getTomorrowDate())
                 }
