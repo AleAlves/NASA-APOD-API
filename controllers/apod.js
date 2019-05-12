@@ -91,7 +91,7 @@ module.exports = (app) => {
 
         var topic = "/topics/DailyAPOD";
 
-        var payload = {
+        let payload = {
             notification: {
                 title: "NASA APOD App",
                 body: "new " + apod.media_type + " available! "
@@ -131,12 +131,12 @@ module.exports = (app) => {
     }
 
     function getTodayDate() {
-        var d = new Date();
-        return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+        let date = new Date();
+        return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     }
 
     function getTomorrowDate() {
-        var date = new Date();
+        let date = new Date();
         date.setDate(date.getDate() + 1);
         return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     }
