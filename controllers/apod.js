@@ -42,15 +42,18 @@ module.exports = (app) => {
 
         setTimeout(() => {
 
+            console.log("setTimeout:  ");
+
             configModel.findOne({
                 dailyAPOD: response.data.date
             }, function (error, response) {
+
                 if (response == null) {
 
                     checkTodayApod(requestDate);
                 }
             });
-        }, 36000);
+        }, 3600000);
 
         // Uma hora - 3600000
 
@@ -76,7 +79,7 @@ module.exports = (app) => {
                 .catch(error => {
 
                     console.log("\nError: " + error);
-                    requestApod(requestDate);
+                    requestApod(date);
                 });
         }
     }
@@ -93,6 +96,7 @@ module.exports = (app) => {
         };
 
         firebaseAdmin.messaging().sendToDevice(topic, payload).then(function (response) {
+
             console.log("Successfully sent message:", response);
             console.log("now req one date:" + getTomorrowDate());
 
@@ -109,9 +113,11 @@ module.exports = (app) => {
 
                     configModel.dailyAPOD = response.data.date
                     configModel.crate(config, function (error, response) {
+
                         requestApod(getTomorrowDate())
                     });
                 } else {
+
                     configModel.dailyAPOD = response.data.date
                     configModel.save();
                     requestApod(getTomorrowDate())
@@ -119,8 +125,9 @@ module.exports = (app) => {
 
             });
         }).catch(function (error) {
+
             console.log("Error sending message:", error)
-            requestApod(date)
+            requestApod(getTodayDate())
         });
     }
 
