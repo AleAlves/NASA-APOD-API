@@ -118,8 +118,10 @@ module.exports = (app) => {
                 } else {
                     
                     configModel.dailyAPOD = date;
-                    configModel.save();
-                    requestApod(getTomorrowDate())
+                    configModel.save(function(error, done){
+                
+                        requestApod(getTomorrowDate());
+                    });
                 }
 
             });
@@ -131,8 +133,8 @@ module.exports = (app) => {
     }
 
     function getTodayDate() {
-        var d = new Date();
-        return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+        var date = new Date();
+        return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     }
 
     function getTomorrowDate() {
