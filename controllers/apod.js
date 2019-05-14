@@ -56,7 +56,7 @@ module.exports = (app) => {
                     requestApod(getTomorrowDate());
                 }
             });
-        }, 3600000);
+        }, 3600);
 
         // Uma hora - 3600000
 
@@ -117,8 +117,8 @@ module.exports = (app) => {
 
                 } else {
                     
-                    configModel.dailyAPOD = date;
-                    configModel.save(function(error, done){
+                    response.dailyAPOD = date;
+                    response.save(function(error, done){
                 
                         requestApod(getTomorrowDate());
                     });
