@@ -107,7 +107,7 @@ module.exports = function (app) {
 
             let userToken = jsonWebToken.decode(req.headers.token, jsonWebTokenSecret);
 
-            userModel.remove({ _id: userToken.uid }, function(error) {
+            userModel.deleteOne({ _id: userToken.uid }, function(error) {
                 if (!error) {
                     sendError(res, error, HTTP_STATUS.SERVER_ERROR.INTERNAL_SERVER_ERROR);
                 }
