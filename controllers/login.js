@@ -86,17 +86,6 @@ module.exports = function (app) {
                     }
                 });
 
-            function sendError(res, message, httpStatus) {
-                let params = {
-                    message: message,
-                    status: httpStatus,
-                    body: null
-                };
-
-                console.log(params);
-                res.send(params);
-            }
-
             function sendToken(res, user, message, httpStatus, ticket) {
                 let token = {
                     user: user,
@@ -112,7 +101,35 @@ module.exports = function (app) {
                 };
                 res.send(params);
             }
+        },
+
+        delete : function (req, res){
+
+            let userToken = jsonWebToken.decode(req.headers.token, jsonWebTokenSecret);
+
+            userModel.remove({ _id: userToken.uid }, function(error) {
+                if (!error) {
+                    sendError(res, error, HTTP_STATUS.SERVER_ERROR.INTERNAL_SERVER_ERROR);
+                }
+                else {
+                    var response = {
+                        status: HTTP_STATUS.SUCESS.OK
+                    };
+                    res.send(response);
+                }
+            });
         }
 
     };
+}
+
+function sendError(res, message, httpStatus) {
+    let params = {
+        message: message,
+        status: httpStatus,
+        body: null
+    };
+
+    console.log(params);
+    res.send(params);
 }
