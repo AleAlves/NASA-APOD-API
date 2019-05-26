@@ -117,8 +117,8 @@ module.exports = (app) => {
 
                 } else {
                     
-                    configModel.dailyAPOD = date;
-                    configModel.save(function(error, done){
+                    response.dailyAPOD = date;
+                    response.save(function(error, done){
                 
                         requestApod(getTomorrowDate());
                     });
