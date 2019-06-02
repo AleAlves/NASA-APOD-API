@@ -8,7 +8,7 @@ global.nasa_api_key = "NTZlQrZD1ugcnmBxdBPa56kbYXut0sEhZen5fMbN";
 
 process.env.TZ = 'America/Sao_Paulo';
 
-const firebaseKeys = process.env.FIREBASE_ADMIN_SDK_KEYS || './nasa-apod-app-firebase-adminsdk-wcrgh-13ad299319.json';
+const firebaseKeys = process.env.FIREBASE_ADMIN_SDK_KEYS || './firebase/nasa-apod-app-firebase-adminsdk-wcrgh-d85d30c640.json';
 
 const port = process.env.PORT || 8083;
 

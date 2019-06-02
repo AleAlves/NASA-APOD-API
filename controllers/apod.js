@@ -53,12 +53,13 @@ module.exports = (app) => {
                 }
                 else{
                     console.log("Request: "+ requestDate);
+                    
                     requestApod(getTomorrowDate());
                 }
             });
-        }, 3600000);
+        }, 60000);
 
-        // Uma hora - 3600000
+        // one hour - 3600000
 
         function checkTodayApod(date) {
 
