@@ -39,7 +39,7 @@ module.exports = (app) => {
 
         console.log("RequestApod, date: " + requestDate);
 
-        setTimeout(() => {
+        setInterval(() => {
 
             console.log("setTimeout:  ");
 
