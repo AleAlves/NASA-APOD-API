@@ -54,7 +54,7 @@ module.exports = (app) => {
                 else{
                     console.log("Request: "+ requestDate);
                     
-                    requestApod(getTomorrowDate());
+                    requestApod(requestDate);
                 }
             });
         }, 3600000);
