@@ -57,7 +57,7 @@ module.exports = (app) => {
                     requestApod(requestDate);
                 }
             });
-        }, 3600);
+        }, 3600000);
 
         // one hour - 3600000
 
