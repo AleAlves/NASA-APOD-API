@@ -39,13 +39,15 @@ module.exports = (app) => {
 
         console.log("RequestApod, date: " + requestDate);
 
-        setInterval(() => {
+        setTimeout(() => {
 
             console.log("setTimeout:  ");
 
             configModel.findOne({
                 dailyAPOD: requestDate
             }, function (error, response) {
+
+                console.log("configModel: "+ response);
 
                 if (response == null) {
 
@@ -57,7 +59,7 @@ module.exports = (app) => {
                     requestApod(requestDate);
                 }
             });
-        }, 3600000);
+        }, 3600);
 
         // one hour - 3600000
 
