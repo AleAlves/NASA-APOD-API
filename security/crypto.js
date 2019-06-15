@@ -48,14 +48,28 @@ module.exports = function (app) {
         numbers: true
     });
 
+    console.log("JWT: " +JWTSecret);
+
     const cryptoUtil = {
 
         JWT: {
             encode: function (data) {
-                return JsonWebToken.encode(data, JWTSecret)
+                try{
+                    return JsonWebToken.encode(data, JWTSecret);
+                }
+                catch(e){
+                    console.log("JWT e: " +e);
+                    return null;
+                }
             },
             decode: function (data) {
-                return JsonWebToken.decode(data, JWTSecret);
+                try{
+                    return JsonWebToken.decode(data, JWTSecret);
+                }
+                catch(e){
+                    console.log("JWT e: " +e);
+                    return null;
+                }
             }
         },
 

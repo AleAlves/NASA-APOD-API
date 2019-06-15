@@ -101,21 +101,28 @@ module.exports = function (app) {
             }
         },
 
-        delete : function (req, res){
+        delete: function (req, res) {
 
             let userToken = cryptoUtil.JWT.decode(req.headers.token);
 
-            userModel.deleteOne({ _id: userToken.uid }, function(error) {
-                if (!error) {
-                    sendError(res, error, HTTP_STATUS.SERVER_ERROR.INTERNAL_SERVER_ERROR);
-                }
-                else {
-                    var response = {
-                        status: HTTP_STATUS.SUCESS.OK
-                    };
-                    res.send(response);
-                }
-            });
+            if (userToken == null) {
+
+                sendError(res, error, HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED);
+            } else {
+
+                userModel.deleteOne({
+                    _id: userToken.uid
+                }, function (error) {
+                    if (!error) {
+                        sendError(res, error, HTTP_STATUS.SERVER_ERROR.INTERNAL_SERVER_ERROR);
+                    } else {
+                        var response = {
+                            status: HTTP_STATUS.SUCESS.OK
+                        };
+                        res.send(response);
+                    }
+                });
+            }
         }
 
     };
