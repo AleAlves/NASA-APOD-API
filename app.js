@@ -2,8 +2,6 @@ global.packageInfo = require('./package.json');
 
 global.HTTP_STATUS = require('./httpStatus.json');
 
-global.jsonWebTokenSecret = process.env.JSON_WEB_TOKEN_SECRET || '123';
-
 global.nasa_api_key = "NTZlQrZD1ugcnmBxdBPa56kbYXut0sEhZen5fMbN";
 
 process.env.TZ = 'America/Sao_Paulo';

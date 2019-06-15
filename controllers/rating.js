@@ -1,16 +1,15 @@
 module.exports = (app) => {
 
-    const jsonWebToken = require('jwt-simple');
-
     var rateModel = app.models.rate;
-
+    const cryptoUtil = app.security.crypto;
+    
     return RatingController = {
 
         favorites: function (req, res) {
 
             console.log("Favorites");
 
-            let user = jsonWebToken.decode(req.headers.token, jsonWebTokenSecret);
+            let user = cryptoUtil.JWT.decode(req.headers.token);
 
             rateModel.find({
                 'rates.uid': user.uid
@@ -44,7 +43,7 @@ module.exports = (app) => {
 
         favorite: function (req, res) {
 
-            let user = jsonWebToken.decode(req.headers.token, jsonWebTokenSecret);
+            let user = cryptoUtil.JWT.decode(req.headers.token);
 
             var httpResponse = {
                 favorite: false,
@@ -86,7 +85,7 @@ module.exports = (app) => {
                 status: HTTP_STATUS.SUCESS.OK
             };
 
-            let user = jsonWebToken.decode(req.headers.token, jsonWebTokenSecret);
+            let user = cryptoUtil.JWT.decode(req.headers.token);
 
             let rater = {
                 uid: user.uid

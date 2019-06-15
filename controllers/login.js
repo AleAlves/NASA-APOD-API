@@ -4,8 +4,6 @@ module.exports = function (app) {
     var user = app.models.user;
     const cryptoUtil = app.security.crypto;
 
-    const jsonWebToken = require('jwt-simple');
-
     return LoginController = {
 
         init: function (req, res) {
@@ -97,7 +95,7 @@ module.exports = function (app) {
                 let params = {
                     message: message,
                     status: httpStatus,
-                    token: jsonWebToken.encode(token, jsonWebTokenSecret)
+                    token: cryptoUtil.JWT.encode(token)
                 };
                 res.send(params);
             }
@@ -105,7 +103,7 @@ module.exports = function (app) {
 
         delete : function (req, res){
 
-            let userToken = jsonWebToken.decode(req.headers.token, jsonWebTokenSecret);
+            let userToken = cryptoUtil.JWT.decode(req.headers.token);
 
             userModel.deleteOne({ _id: userToken.uid }, function(error) {
                 if (!error) {
