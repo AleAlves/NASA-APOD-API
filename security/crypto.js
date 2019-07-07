@@ -43,10 +43,12 @@ module.exports = function (app) {
         b: 1024
     });
 
-    var JWTSecret = generator.generate({
+    var RandomJWTSecret = generator.generate({
         length: 32,
         numbers: true
     });
+
+    var JWTSecret = process.env.JSON_WEB_TOKEN_SECRET || RandomJWTSecret;
 
     console.log("JWT: " +JWTSecret);
 
