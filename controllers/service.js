@@ -1,17 +1,23 @@
+module.exports = (app) => {
 
-module.exports = function (app) {
-
-    var ServiceController = {
+    return ServiceController = {
 
         index: function (req, res) {
-            res.render('home/index', { v: version});
-        },
 
+            res.render('index', {
+                title: packageInfo.name,
+                version: packageInfo.version
+            });
+        },
+        
         version: function (req, res) {
-            var data = new Object();
-            data.version = version;
-            res.send(JSON.stringify(data));
+
+            var response = {
+                version: packageInfo.version,
+                status: HTTP_STATUS.SUCESS.OK
+            };
+            
+            res.send(response);
         }
-    };
-    return ServiceController;
+    }
 }
